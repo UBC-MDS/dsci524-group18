@@ -5,7 +5,7 @@ Code of Conduct
 Purpose and principles
 ^^^^^^^^^^^^^^^^^^^^^^
 
-This document regulates how team-members should behavior throughout the project. We acknowledge that we should strictly follow `UBC <https://students.ubc.ca/campus-life/student-code-conduct> `_ and `MDS <https://ubc-mds.github.io/resources_pages/code_of_conduct/>`_ rules and codes of conduct. 
+This document regulates how team-members should behavior throughout the project. We acknowledge that we should strictly follow `UBC <https://students.ubc.ca/campus-life/student-code-conduct>`_ and `MDS <https://ubc-mds.github.io/resources_pages/code_of_conduct/>`_ rules and codes of conduct. 
 
 Freedom of speech and diversity of opinions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -18,7 +18,7 @@ We appreciate the diversity of team members' personalities and backgrounds. Thei
 Encouraged and untolerated behaviors 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    - Encouraged behaviors 
+- Encouraged behaviors 
 
 As stipulated by UBC and MDS rules, the following behaviors are encouraged: 
 
@@ -29,7 +29,9 @@ As stipulated by UBC and MDS rules, the following behaviors are encouraged:
 5. Show courtesy and respect towards other community members
 6. Be honest about work progress and difficulties 
 
-    - Untolerated behaviors 
+
+- Untolerated behaviors 
+
 
 1. written or verbal personal attacks on people based on their social and political belief, religion, gender, ethnicity, national origin, sexual orientation
 2. causing someone to fear for their safety, such as through stalking, following, or intimidation
