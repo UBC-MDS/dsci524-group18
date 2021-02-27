@@ -33,8 +33,15 @@ While Python packages with similar functionalities exist, this package aims to s
 - TBD
 
 ## Usage
+The eda_utils_py package help you to build exploratory data analysis.
 
-- TBD
+eda_utils_py includes multiple custom functions to perform initial exploratory analysis on any input data describing the structure and the relationships present in the data. The generated output can be obtained in both object and graphical form. 
+
+The eda_utils_py is capable of :
+- Diagnose data quality : Resolve skewed data by identifing missing data and outlier and provide corresponding remedy.
+- Discover data: Plot correlation mattrix to help explore data to understand the data and find scenarios for performing the analysis.
+- Machine learning pereperation : Perform column transformations, derive scaler automatically to fulfill further machine learning need
+    
 
 ## Documentation
 
