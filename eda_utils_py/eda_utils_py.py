@@ -26,3 +26,32 @@ def cor_map(dataframe, num_col):
         cor_map(data, numerical_columns)
         
     """
+
+
+def outlier_identifier(dataframe, columns = None, method = "somefunction"):
+    """
+    A function that identify and deal with outliers based on the method the user choose
+
+    Key arguments: 
+        dataframe [pandas.DataFrame]: 
+            The target dataframe where the function is performed.
+        columns [list] : None
+            The target columns where the function needed to be performed. Defualt is None, the function will check all columns
+        method [string] : "somefunction"
+            The method of dealing with outliers. 
+        
+    Returns:
+        dataframe :
+            The dataframe which the outlier has already process by the chosen method
+    
+    Examples:
+        data = pd.DataFrame({
+            'SepalLengthCm':[5.1, 4.9, 4.7],
+            'SepalWidthCm':[1.4, 1.4, 9999999.99],
+            'PetalWidthCm:[0.2, 0.2, 0.2],
+            'Species':['Iris-setosa','Iris-virginica']
+        })
+
+        outlier_identifier(data)
+
+    """
