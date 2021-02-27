@@ -30,6 +30,7 @@ As stipulated by UBC and MDS rules, the following behaviors are encouraged:
 6. Be honest about work progress and difficulties 
 
 
+
 - Untolerated behaviors 
 
 
@@ -43,6 +44,8 @@ As stipulated by UBC and MDS rules, the following behaviors are encouraged:
 8. excessive swearing
 9. incitement to violence, suicide, or self-harm
 10. continuing to initiate interaction (including photography or recording) with someone after being asked to stop publication of private communication without consent
+
+
 
 
 
@@ -63,5 +66,3 @@ This Code of Conduct applies both within project spaces and in public spaces whe
 Attribution
 ^^^^^^^^^^^
 Derived from the `DSCI100 Code of Conduct <https://github.com/UBC-DSCI/dsci-100/blob/master/CODE_OF_CONDUCT.md>`_
-
-This Code of Conduct is adapted from the `Contributor Covenant homepage <http://contributor-covenant.org/version/1/4>`_, version 1.4.
