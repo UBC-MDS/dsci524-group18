@@ -40,7 +40,7 @@ eda_utils_py includes multiple custom functions to perform initial exploratory a
 The eda_utils_py is capable of :
 - Diagnose data quality : Resolve skewed data by identifing missing data and outlier and provide corresponding remedy.
 - Discover data: Plot correlation mattrix to help explore data to understand the data and find scenarios for performing the analysis.
-- Machine learning pereperation : Perform column transformations, derive scaller automatically to fulfill futhure machine learning need
+- Machine learning pereperation : Perform column transformations, derive scaler automatically to fulfill further machine learning need
     
 
 ## Documentation
