@@ -18,9 +18,8 @@ We appreciate the diversity of team members' personalities and backgrounds. Thei
 Encouraged and untolerated behaviors 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Encouraged behaviors 
+- As stipulated by UBC and MDS rules, the following behaviors are encouraged: 
 
-As stipulated by UBC and MDS rules, the following behaviors are encouraged: 
 
 1. Use welcoming and polite language
 2. Be respectful of different viewpoints and experiences
@@ -31,7 +30,7 @@ As stipulated by UBC and MDS rules, the following behaviors are encouraged:
 
 
 
-- Untolerated behaviors 
+- As stipulated by UBC and MDS rules, the following behaviors will not be untolerated: 
 
 
 1. written or verbal personal attacks on people based on their social and political belief, religion, gender, ethnicity, national origin, sexual orientation
