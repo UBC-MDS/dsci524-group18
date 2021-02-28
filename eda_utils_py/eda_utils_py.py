@@ -1,4 +1,3 @@
-
 def cor_map(dataframe, num_col):
     """
     A function to implement a correlation heatmap including coefficients based on given numeric columns of a data frame.
@@ -28,7 +27,7 @@ def cor_map(dataframe, num_col):
     """
 
 
-def outlier_identifier(dataframe, columns = None, method = "somefunction"):
+def outlier_identifier(dataframe, columns=None, method="somefunction"):
     """
     A function that identify and deal with outliers based on the method the user choose
 
@@ -55,3 +54,35 @@ def outlier_identifier(dataframe, columns = None, method = "somefunction"):
         outlier_identifier(data)
 
     """
+
+
+def scale(dataframe, columns=None):
+    """
+    A function to scale features by removing the mean and scaling to unit variance
+.
+
+    Args:
+        dataframe (pandas.DataFrame): The data frame to be used for EDA.
+        columns (list):  A list of string of column names with numeric data from the data frame that we wish to scale.
+
+    Returns:
+        dataframe :
+            The scaled dataframe for numerical features
+
+    Examples:
+        import pandas as pd
+        from eda_utils_py import scale
+
+        data = pd.DataFrame({
+            'SepalLengthCm':[5.1, 4.9, 4.7],
+            'SepalWidthCm':[1.4, 1.4, 1.3],
+            'PetalWidthCm:[0.2, 0.2, 0.2],
+            'Species':['Iris-setosa','Iris-virginica']
+        })
+
+        numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
+
+        scale(data, numerical_columns)
+
+    """
+    pass
