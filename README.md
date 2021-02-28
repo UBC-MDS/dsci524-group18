@@ -49,7 +49,9 @@ The official documentation is hosted on Read the Docs: https://eda_utils_py.read
 
 ## Contributors
 
-We welcome and recognize all contributions. You can see a list of current contributors in the [contributors tab](https://github.com/chuangw46/eda_utils_py/graphs/contributors).
+This package is authored by Chuang Wang, Fatime Selimi, Jiacheng Wang, and Micah Kwok as part of the course project in DSCI-524 (UBC-MDS program). You can see the list of all contributors in the [contributors tab](https://github.com/UBC-MDS/eda_utils_py/graphs/contributors).
+
+We welcome and recognize all contributions. If you wish to participate, please review our [contributing guidelines](https://github.com/UBC-MDS/eda_utils_py/blob/main/CONTRIBUTING.rst). 
 
 ### Credits
 
