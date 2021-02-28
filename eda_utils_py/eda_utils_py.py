@@ -75,7 +75,7 @@ def cor_map(dataframe, num_col):
     pass
 
 
-def outlier_identifier(dataframe, columns=None, method="somefunction"):
+def outlier_identifier(dataframe, columns=None, method="trim"):
     """
     A function that identify and deal with outliers based on the method the user choose
 
@@ -87,6 +87,8 @@ def outlier_identifier(dataframe, columns=None, method="somefunction"):
         The target columns where the function needed to be performed. Defualt is None, the function will check all columns
     method : string
         The method of dealing with outliers. 
+            - if "trim" : we completely remove data points that are outliers.
+            - if "median" : we replace outliers with median values
         
     Returns
     -------
