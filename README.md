@@ -15,10 +15,10 @@ $ pip install -i https://test.pypi.org/simple/ eda_utils_py
 ## Functions
 
 The four functions contained in this package are as follows:
-- Function 1: A function to identify and impute missing values
-- Function 2: A function to identify and deal with outliers
-- Function 3: A function to scale numerical values in the dataset
 - `cor_map`: A function to plot a correlation matrix of numeric columns in the dataframe
+- `outlier_identifier`: A function to identify and deal with outliers
+- `scale` A function to scale numerical values in the dataset
+- `imputer`: A function to impute missing values
 
 
 ## Our Place in the Python Ecosystem
