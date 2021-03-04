@@ -85,20 +85,20 @@ def cor_map(dataframe, num_col, col_scheme = 'purpleorange'):
     
     # Tests whether input data is of pd.DataFrame type
     if not isinstance(dataframe, pd.DataFrame):
-        raise Exception("The input dataframe must be of pd.DataFrame type")
+        raise TypeError("The input dataframe must be of pd.DataFrame type")
 
     # Tests whether input num_col is of type list
     if not isinstance(num_col, list):
-        raise Exception("The input num_col must be of type list")
+        raise TypeError("The input num_col must be of type list")
     
     # Tests whether values of num_col is of type str 
     for x in num_col:
         if not isinstance(x, str):
-            raise Exception("The type of values in num_col must all be str")
+            raise TypeError("The type of values in num_col must all be str")
 
     # Tests whether input col_scheme is of type str    
     if not isinstance(col_scheme, str):
-        raise Exception("col_scheme must be of type str")
+        raise TypeError("col_scheme must be of type str")
 
     # Tests whether col_scheme is one of three possible options    
     if col_scheme not in ('purpleorange', 'blueorange', 'redblue'):
