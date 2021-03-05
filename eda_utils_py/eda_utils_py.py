@@ -52,7 +52,7 @@ def imputer(df, strategy="mean", fill_value=None):
     if not isinstance(strategy, str):
         raise TypeError("strategy must be of type str")
 
-    # Tests whether input strategy is of type str
+    # Tests whether input fill_value is of type numbers or None
     if not isinstance(fill_value, type(None)) and not isinstance(
         fill_value, numbers.Number
     ):
