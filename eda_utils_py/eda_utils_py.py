@@ -230,7 +230,7 @@ def scale(dataframe, columns=None, scaler="standard"):
         The data frame to be used for EDA.
     columns : list, default=None
         A list of string of column names with numeric data from the data frame that we wish to scale.
-
+    TODO update docstring
     Returns
     -------
     dataframe : pandas.core.frame.DataFrame
@@ -250,7 +250,7 @@ def scale(dataframe, columns=None, scaler="standard"):
 
     >> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
 
-    >> scale(data, numerical_columns)
+    >> scale(data, numerical_columns, scaler="minmax")
     """
 
     # Check if input data is of pd.DataFrame type
