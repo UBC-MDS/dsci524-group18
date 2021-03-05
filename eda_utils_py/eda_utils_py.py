@@ -4,22 +4,22 @@ from pandas.api.types import is_numeric_dtype
 import numbers
 
 
-def imputer(dataframe, strategy="mean", fill_value=None):
+def imputer(df, strategy="mean", fill_value=None):
     """
     A function to implement imputation functionality for completing missing values.
 
     Parameters
     ----------
-    dataframe : pandas.core.frame.DataFrame
+    df : pandas.core.frame.DataFrame
         a dataframe that might contain missing data
     strategy : string, default="mean"
         The imputation strategy.
-            - If “mean”, then replace missing values using the mean along each column. Can only be used with numeric data.
-            - If “median”, then replace missing values using the median along each column. Can only be used with numeric data.
-            - If “most_frequent”, then replace missing using the most frequent value along each column. Can be used with strings or numeric data. If there is more than one such value, only the smallest is returned.
-            - If “constant”, then replace missing values with fill_value. Can be used with strings or numeric data.
+            - If "mean", then replace missing values using the mean along each column. Can only be used with numeric data.
+            - If "median", then replace missing values using the median along each column. Can only be used with numeric data.
+            - If "most_frequent", then replace missing using the most frequent value along each column. Can be used with strings or numeric data. If there is more than one such value, only the smallest is returned.
+            - If "constant", then replace missing values with fill_value. Can be used with strings or numeric data.
     fill_value : numerical value, default=None
-        When strategy == “constant”, fill_value is used to replace all occurrences of missing_values. If left to the default, fill_value will be 0 when imputing numerical data.
+        When strategy == "constant", fill_value is used to replace all occurrences of missing_values. If left to the default, fill_value will be 0 when imputing numerical data.
 
     Returns
     -------
@@ -45,7 +45,7 @@ def imputer(dataframe, strategy="mean", fill_value=None):
     """
 
     # Tests whether input data is of pd.DataFrame type
-    if not isinstance(dataframe, pd.DataFrame):
+    if not isinstance(df, pd.DataFrame):
         raise TypeError("The input dataframe must be of pd.DataFrame type")
 
     # Tests whether input strategy is of type str
@@ -60,18 +60,28 @@ def imputer(dataframe, strategy="mean", fill_value=None):
 
     # Tests whether the inputs for strategy and fill_value are consistent
     if isinstance(fill_value, numbers.Number) and strategy != "constant":
-        raise Exception("this not correct")
+        raise Exception("fill_value can be a number only if strategy is 'constant'")
 
     # Tests whether the inputs for strategy and fill_value are consistent
     if isinstance(fill_value, type(None)) and strategy == "constant":
-        raise Exception("this not correct!")
+        raise Exception("fill_value should be a number when strategy is 'constant'")
 
+    result = pd.DataFrame()
+    if strategy == "mean":
+        result = df.apply(lambda x: x.fillna(x.mean()), axis=0)
+    elif strategy == "median":
+        result = df.apply(lambda x: x.fillna(x.median()), axis=0)
+    elif strategy == "most_frequent":
+        result = df.apply(lambda x: x.fillna(x.value_counts().index[0]), axis=0)
+    elif strategy == "constant":
+        result = df.apply(lambda x: x.fillna(fill_value))
+    else:
+        raise Exception(
+            "strategy should be one of 'mean', 'median', 'most_frequent' and 'constant'"
+        )
 
-df = pd.DataFrame(
-    {"col1": [None, 4, 4, 7], "col2": [2, None, None, 2], "col3": [3, None, 6, 6]}
-)
+    return result
 
-imputer(df, strategy="constant")
 
 
 def cor_map(dataframe, num_col, col_scheme="purpleorange"):
