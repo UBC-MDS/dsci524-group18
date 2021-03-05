@@ -1,3 +1,7 @@
+import pandas as pd
+import altair as alt
+from pandas.api.types import is_numeric_dtype
+
 def imputer(dataframe, strategy="mean", fill_value=None):
     """
     A function to implement imputation functionality for completing missing values.
@@ -40,7 +44,8 @@ def imputer(dataframe, strategy="mean", fill_value=None):
     pass
 
 
-def cor_map(dataframe, num_col):
+def cor_map(dataframe, num_col, col_scheme = 'purpleorange'):
+    
     """
     A function to implement a correlation heatmap including coefficients based on given numeric columns of a data frame.
 
@@ -50,6 +55,11 @@ def cor_map(dataframe, num_col):
         The data frame to be used for EDA.
     num_col : list  
         A list of string of column names with numeric data from the data frame.
+    col_scheme : str, default = 'purpleorange'  
+        The color scheme of the heatmap desired, can only be one of the following;
+            - 'purpleorange'
+            - 'blueorange' 
+            - 'redblue'
 
     Returns
     -------
@@ -69,10 +79,67 @@ def cor_map(dataframe, num_col):
     >>> })
 
     >>> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']    
-    >>> cor_map(data, numerical_columns)
+    >>> cor_map(data, numerical_columns, col_scheme = 'purpleorange')
         
     """
-    pass
+    
+    # Tests whether input data is of pd.DataFrame type
+    if not isinstance(dataframe, pd.DataFrame):
+        raise TypeError("The input dataframe must be of pd.DataFrame type")
+
+    # Tests whether input num_col is of type list
+    if not isinstance(num_col, list):
+        raise TypeError("The input num_col must be of type list")
+    
+    # Tests whether values of num_col is of type str 
+    for x in num_col:
+        if not isinstance(x, str):
+            raise TypeError("The type of values in num_col must all be str")
+
+    # Tests whether input col_scheme is of type str    
+    if not isinstance(col_scheme, str):
+        raise TypeError("col_scheme must be of type str")
+
+    # Tests whether col_scheme is one of three possible options    
+    if col_scheme not in ('purpleorange', 'blueorange', 'redblue'):
+        raise Exception("This color scheme is not available, please use either 'purpleorange', 'blueorange' or 'redblue'")
+
+    # Tests whether all input columns exist in the input data
+    for x in num_col:
+        if x not in list(dataframe.columns):
+            raise Exception("The given column names must exist in the given dataframe.")    
+        
+    # Tests whether all input columns in num_col are numeric columns
+    for x in num_col:
+        if not is_numeric_dtype(dataframe[x]):
+            raise Exception("The given numerical columns must all be numeric.")
+    
+    
+    corr_matrix = dataframe[num_col].corr().reset_index().melt('index')
+    corr_matrix.columns = ['var1', 'var2', 'cor']
+
+    plot = alt.Chart(corr_matrix).mark_rect().encode(
+        x=alt.X('var1', title=None),
+        y=alt.Y('var2', title=None),
+        color=alt.Color('cor',legend=None,
+                       scale = alt.Scale(scheme = col_scheme)),
+    ).properties(
+        title = 'Correlation Matrix',
+        width=400, height=400
+    )
+
+    text = plot.mark_text(size=15).encode(
+        text=alt.Text('cor', format=".2f"),
+        color=alt.condition(
+            "datum.cor > 0.5 | datum.cor < -0.3",
+            alt.value('white'),
+            alt.value('black')
+        )
+    )
+    
+    cor_heatmap = plot + text
+
+    return cor_heatmap
 
 
 def outlier_identifier(dataframe, columns=None, method="trim"):
