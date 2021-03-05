@@ -238,19 +238,19 @@ def scale(dataframe, columns=None, scaler="standard"):
 
     Examples
     --------
-    >>> import pandas as pd
-    >>> from eda_utils_py import scale
+    >> import pandas as pd
+    >> from eda_utils_py import scale
 
-    >>> data = pd.DataFrame({
-    >>>     'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>>     'SepalWidthCm':[1.4, 1.4, 1.3],
-    >>>     'PetalWidthCm:[0.2, 0.2, 0.2],
-    >>>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
-    >>> })
+    >> data = pd.DataFrame({
+    >>     'SepalLengthCm':[5.1, 4.9, 4.7],
+    >>     'SepalWidthCm':[1.4, 1.4, 1.3],
+    >>     'PetalWidthCm:[0.2, 0.2, 0.2],
+    >>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
+    >> })
 
-    >>> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
+    >> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
 
-    >>> scale(data, numerical_columns)
+    >> scale(data, numerical_columns)
     """
 
     # Check if input data is of pd.DataFrame type
@@ -278,13 +278,13 @@ def scale(dataframe, columns=None, scaler="standard"):
 
     scaler = None
 
-    if scaler == "standard":
+    if scaler == "minmax":
+        minmax = _dataset_minmax(dataframe[columns])
+        scaler = _minmax_dataset(dataframe[columns], minmax)
+    else:
         means = _calculate_means(dataframe[columns])
         stdevs = _calculate_stdevs(dataframe[columns], means)
         scaler = _standardize_dataset(dataframe[columns], means, stdevs)
-    else:
-        minmax = _dataset_minmax(dataframe[columns])
-        scaler = _minmax_dataset(dataframe[columns], minmax)
 
     return scaler
 
@@ -308,6 +308,7 @@ def _calculate_stdevs(dataset, means):
     stdevs = [sqrt(x / float(len(dataset) - 1)) for x in stdevs]
 
     return stdevs
+
 
 # scaled_value = (value - mean) / stdev
 def _standardize_dataset(dataset, means, stdevs):
