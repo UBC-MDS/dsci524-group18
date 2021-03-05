@@ -220,7 +220,7 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
     pass
 
 
-def scale(dataframe, columns=None):
+def scale(dataframe, columns=None, scaler="standard"):
     """
     A function to scale features by removing the mean and scaling to unit variance
 
@@ -252,4 +252,84 @@ def scale(dataframe, columns=None):
 
     >>> scale(data, numerical_columns)
     """
-    pass
+
+    # Check if input data is of pd.DataFrame type
+    if not isinstance(dataframe, pd.DataFrame):
+        raise TypeError("The input dataframe must be of pd.DataFrame type")
+
+    # Check if input num_col is of type list
+    if not isinstance(columns, list):
+        raise TypeError("The input columns must be of type list")
+
+    # Check if values of columns are of type str
+    for col in columns:
+        if not isinstance(col, str):
+            raise TypeError("The name of features in columns list must all be str")
+
+    # Check if all input columns exist in the input data
+    for col in columns:
+        if col not in list(dataframe.columns):
+            raise Exception("The given column names must exist in the given dataframe.")
+
+    # Check if all input columns in num_col are numeric columns
+    for col in columns:
+        if not is_numeric_dtype(dataframe[col]):
+            raise Exception("The given numerical columns must all be numeric.")
+
+    scaler = None
+
+    if scaler == "standard":
+        means = _calculate_means(dataframe[columns])
+        stdevs = _calculate_stdevs(dataframe[columns], means)
+        scaler = _standardize_dataset(dataframe[columns], means, stdevs)
+    else:
+        minmax = _dataset_minmax(dataframe[columns])
+        scaler = _minmax_dataset(dataframe[columns], minmax)
+
+    return scaler
+
+
+# calculate means
+def _calculate_means(dataset):
+    means = [0 for _ in range(len(dataset[0]))]
+    for i in range(len(dataset[0])):
+        col_values = [row[i] for row in dataset]
+        means[i] = sum(col_values) / float(len(dataset))
+
+    return means
+
+
+# calculate standard deviation
+def _calculate_stdevs(dataset, means):
+    stdevs = [0 for _ in range(len(dataset[0]))]
+    for i in range(len(dataset[0])):
+        variance = [pow(row[i] - means[i], 2) for row in dataset]
+        stdevs[i] = sum(variance)
+    stdevs = [sqrt(x / float(len(dataset) - 1)) for x in stdevs]
+
+    return stdevs
+
+# scaled_value = (value - mean) / stdev
+def _standardize_dataset(dataset, means, stdevs):
+    for row in dataset:
+        for i in range(len(row)):
+            row[i] = (row[i] - means[i]) / stdevs[i]
+
+
+# Find the min and max values for each column
+def _dataset_minmax(dataset):
+    minmax = list()
+    for i in range(len(dataset[0])):
+        col_values = [row[i] for row in dataset]
+        value_min = min(col_values)
+        value_max = max(col_values)
+        minmax.append([value_min, value_max])
+    return minmax
+
+
+# Rescale dataset columns to the range 0-1
+# scaled_value = (value - min) / (mix - min)
+def _minmax_dataset(dataset, minmax):
+    for row in dataset:
+        for i in range(len(row)):
+            row[i] = (row[i] - minmax[i][0]) / (minmax[i][1] - minmax[i][0])
