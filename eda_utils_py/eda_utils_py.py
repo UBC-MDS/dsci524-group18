@@ -111,19 +111,18 @@ def cor_map(dataframe, num_col, col_scheme="purpleorange"):
 
     Examples
     ---------
-    >>> import pandas as pd
-    >>> from eda_utils_py import cor_map
+    >> import pandas as pd
+    >> from eda_utils_py import cor_map
 
-    >>> data = pd.DataFrame({
-    >>>     'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>>     'SepalWidthCm':[1.4, 1.4, 1.3],
-    >>>     'PetalWidthCm':[0.2, 0.2, 0.2],
-    >>>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
-    >>> })
+    >> data = pd.DataFrame({
+    >>     'SepalLengthCm':[5.1, 4.9, 4.7],
+    >>     'SepalWidthCm':[1.4, 1.4, 1.3],
+    >>     'PetalWidthCm':[0.2, 0.2, 0.2],
+    >>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
+    >> })
 
-    >>> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
-    >>> cor_map(data, numerical_columns, col_scheme = 'purpleorange')
-
+    >> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
+    >> cor_map(data, numerical_columns, col_scheme = 'purpleorange')
     """
 
     # Tests whether input data is of pd.DataFrame type
@@ -207,17 +206,17 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
 
     Examples
     --------
-    >>> import pandas as pd
-    >>> from eda_utils_py import cor_map
+    >> import pandas as pd
+    >> from eda_utils_py import cor_map
 
-    >>> data = pd.DataFrame({
-    >>>    'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>>    'SepalWidthCm':[1.4, 1.4, 9999999.99],
-    >>>    'PetalWidthCm:[0.2, 0.2, 0.2],
-    >>>    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
-    >>> })
+    >> data = pd.DataFrame({
+    >>    'SepalLengthCm':[5.1, 4.9, 4.7],
+    >>    'SepalWidthCm':[1.4, 1.4, 9999999.99],
+    >>    'PetalWidthCm:[0.2, 0.2, 0.2],
+    >>    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
+    >> })
 
-    >>> outlier_identifier(data)
+    >> outlier_identifier(data)
 
     """
     pass
