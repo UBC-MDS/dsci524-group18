@@ -276,6 +276,21 @@ def scale(dataframe, columns=None, scaler="standard"):
         if not is_numeric_dtype(dataframe[col]):
             raise Exception("The given numerical columns must all be numeric.")
 
+    # Check if scaler is either standard or minmax
+    if scaler not in ('standard', 'minmax'):
+        raise Exception(
+            "The methods available for the scaler are 'standard' and 'minmax'")
+
+    # Check if all input columns exist in the input data
+    for col in columns:
+        if col not in list(dataframe.columns):
+            raise Exception("The given column names must exist in the given dataframe.")
+
+    # Check if all input columns in num_col are numeric columns
+    for col in columns:
+        if not is_numeric_dtype(dataframe[col]):
+            raise Exception("The given columns must all be numeric.")
+
     scaler = None
 
     if scaler == "minmax":
