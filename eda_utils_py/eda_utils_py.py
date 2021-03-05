@@ -110,7 +110,31 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
     >>> outlier_identifier(data)
 
     """
-    pass
+    target_columns = []
+    if(columns is None):
+        target_columns = list(dataframe.columns.values.tolist()) 
+        
+        
+    outlier_index = []
+    for column in target_columns:
+        current_column = dataframe[column]
+        mean = np.mean(current_column)
+        std = np.std(current_column)
+        threshold = 3
+        
+        for i in range(len(current_column)):
+            current_item = current_column[i]
+            z = (current_item - mean) / std
+            if z >= threshold:
+                if(i not in outlier_index):
+                    outlier_index.append(i)
+                if(method == "median"):
+                    m = np.median(current_column)
+                    dataframe[column][i] = m
+    
+    if(method == "trim"):
+        dataframe = dataframe.drop(outlier_index)
+    return dataframe
 
 
 def scale(dataframe, columns=None):
