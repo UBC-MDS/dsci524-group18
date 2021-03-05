@@ -3,7 +3,7 @@ import pandas as pd
 from pandas.api.types import is_numeric_dtype
 import numbers
 
-from eda_utils_py.utils import _calculate_means, _calculate_stdevs, _minmax, _standardize, _get_dataframe_minmax
+from eda_utils_py.utils import _get_dataframe_means, _get_dataframe_stdevs, _minmax, _standardize, _get_dataframe_minmax
 
 
 
@@ -300,8 +300,8 @@ def scale(dataframe, columns=None, scaler="standard"):
         minmax = _get_dataframe_minmax(dataframe[columns])
         scaler = _minmax(dataframe[columns], minmax)
     else:
-        means = _calculate_means(dataframe[columns])
-        stdevs = _calculate_stdevs(dataframe[columns], means)
+        means = _get_dataframe_means(dataframe[columns])
+        stdevs = _get_dataframe_stdevs(dataframe[columns], means)
         scaler = _standardize(dataframe[columns], means, stdevs)
 
     return scaler

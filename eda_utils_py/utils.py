@@ -1,8 +1,17 @@
 from math import sqrt
 
 
-# calculate means
-def _calculate_means(dataframe):
+def _get_dataframe_means(dataframe):
+    """Compute the means for each feature in the dataset to be used for later scaling.
+    Parameters
+    ----------
+    dataframe : pandas.DataFrame
+        The data frame to be used for EDA.
+    Returns
+    -------
+    means : list
+        An array of mean values for each feature
+    """
     means = [0 for _ in range(len(dataframe[0]))]
     for i in range(len(dataframe[0])):
         col_values = [row[i] for row in dataframe]
@@ -11,8 +20,19 @@ def _calculate_means(dataframe):
     return means
 
 
-# calculate standard deviation
-def _calculate_stdevs(dataframe, means):
+def _get_dataframe_stdevs(dataframe, means):
+    """Compute the standard deviation for each feature in the dataset to be used for later scaling.
+    Parameters
+    ----------
+    dataframe : pandas.DataFrame
+        The data frame to be used for EDA.
+    means : object
+        The array returned from def _get_dataframe_means(dataframe)
+    Returns
+    -------
+    stdevs : list
+        An array of standard deviation values for each feature
+    """
     stdevs = [0 for _ in range(len(dataframe[0]))]
     for i in range(len(dataframe[0])):
         variance = [pow(row[i] - means[i], 2) for row in dataframe]
@@ -24,22 +44,21 @@ def _calculate_stdevs(dataframe, means):
 
 # scaled_value = (value - mean) / stdev
 def _standardize(dataframe, means, stdevs):
-    """Transform features by rescaling each feature to the range between 0 and 1.
+    """Transform features by centering the distribution of the data
+    on the value 0 and the standard deviation to the value 1.
+
     The transformation is given by:
 
-        scaled_value = (feature_value - min) / (mix - min)
-
-    where min, max = feature_range.
-
-    This transformation is often used as an alternative to zero mean,
-    unit variance scaling.
+        scaled_value = (value - mean) / standard deviation
 
     Parameters
     ----------
     dataframe : pandas.DataFrame
         The data frame to be used for EDA.
-    minmax : object
-        The array returned from def _get_dataset_minmax(dataset)
+    means : object
+        The array returned from def _get_dataframe_means(dataframe)
+    stdevs : object
+        The array returned from def _get_dataframe_stdevs(dataframe)
     Returns
     -------
     self : object
@@ -51,7 +70,7 @@ def _standardize(dataframe, means, stdevs):
 
 
 def _get_dataframe_minmax(dataframe):
-    """Compute the minimum and maximum for each feature in the dataset, to be used for later scaling.
+    """Compute the minimum and maximum for each feature in the dataset to be used for later scaling.
     Parameters
     ----------
     dataframe : pandas.DataFrame
@@ -86,7 +105,7 @@ def _minmax(dataframe, minmax):
     dataframe : pandas.DataFrame
         The data frame to be used for EDA.
     minmax : object
-        The array returned from def _get_dataset_minmax(dataset)
+        The array returned from def _get_dataset_minmax(dataframe)
     Returns
     -------
     self : object
