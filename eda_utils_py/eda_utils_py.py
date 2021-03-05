@@ -306,5 +306,3 @@ def scale(dataframe, columns=None, scaler="standard"):
         scaler = _standardize_dataset(dataframe[columns], means, stdevs)
 
     return scaler
-
-

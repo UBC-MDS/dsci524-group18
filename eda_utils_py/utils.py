@@ -1,5 +1,6 @@
 from math import sqrt
 
+
 # calculate means
 def _calculate_means(dataset):
     means = [0 for _ in range(len(dataset[0]))]
