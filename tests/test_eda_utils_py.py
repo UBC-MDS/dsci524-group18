@@ -14,33 +14,33 @@ def test_imputer():
     'col3':[3, None, 6, 6]
     })
     
-    imt_mean = pd.DataFrame({
+    imp_mean = pd.DataFrame({
     'col1':[5, 4, 4, 7], 
     'col2':[2, 2, 2, 2],
     'col3':[3, 5, 6, 6]
     })
     
-    imt_median = pd.DataFrame({
+    imp_median = pd.DataFrame({
     'col1':[4, 4, 4, 7], 
     'col2':[2, 2, 2, 2],
     'col3':[3, 6, 6, 6]
     })
     
-    imt_most_frequent = pd.DataFrame({
+    imp_most_frequent = pd.DataFrame({
     'col1':[4, 4, 4, 7], 
     'col2':[2, 2, 2, 2],
     'col3':[3, 6, 6, 6]
     })
     
-    imt_constant = pd.DataFrame({
+    imp_constant = pd.DataFrame({
     'col1':[1, 4, 4, 7], 
     'col2':[2, 1, 1, 2],
     'col3':[3, 1, 6, 6]
     })
-    assert (eda_utils_py.imputer(data) == imt_mean).all()
-    assert (eda_utils_py.imputer(data, "median") == imt_median).all()
-    assert (eda_utils_py.imputer(data, "most_frequent") == imt_most_frequent).all()
-    assert (eda_utils_py.imputer(data, "constant", 1) == imt_constant).all()
+    assert (eda_utils_py.imputer(data) == imp_mean).all()
+    assert (eda_utils_py.imputer(data, "median") == imp_median).all()
+    assert (eda_utils_py.imputer(data, "most_frequent") == imp_most_frequent).all()
+    assert (eda_utils_py.imputer(data, "constant", 1) == imp_constant).all()
     
     
 
