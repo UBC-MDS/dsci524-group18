@@ -7,6 +7,17 @@ Contributing
 Contributions are welcome, and they are greatly appreciated! Every little bit
 helps, and credit will always be given.
 
+Contributor Agreement
+----------------------
+
+By contributing,
+you agree that we may redistribute your work under our license.
+In exchange,
+we will address your issues and/or assess your change proposal as promptly as 
+we can, and help you become a member of our community.
+Everyone involved agrees to abide by our 
+code of conduct.
+
 You can contribute in many ways:
 
 Types of Contributions

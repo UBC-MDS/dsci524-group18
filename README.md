@@ -15,10 +15,10 @@ $ pip install -i https://test.pypi.org/simple/ eda_utils_py
 ## Functions
 
 The four functions contained in this package are as follows:
-- Function 1: A function to identify and impute missing values
-- Function 2: A function to identify and deal with outliers
-- Function 3: A function to scale numerical values in the dataset
 - `cor_map`: A function to plot a correlation matrix of numeric columns in the dataframe
+- `outlier_identifier`: A function to identify and deal with outliers
+- `scale` A function to scale numerical values in the dataset
+- `imputer`: A function to impute missing values
 
 
 ## Our Place in the Python Ecosystem
@@ -49,7 +49,9 @@ The official documentation is hosted on Read the Docs: https://eda_utils_py.read
 
 ## Contributors
 
-We welcome and recognize all contributions. You can see a list of current contributors in the [contributors tab](https://github.com/chuangw46/eda_utils_py/graphs/contributors).
+This package is authored by Chuang Wang, Fatime Selimi, Jiacheng Wang, and Micah Kwok as part of the course project in DSCI-524 (UBC-MDS program). You can see the list of all contributors in the [contributors tab](https://github.com/UBC-MDS/eda_utils_py/graphs/contributors).
+
+We welcome and recognize all contributions. If you wish to participate, please review our [contributing guidelines](https://github.com/UBC-MDS/eda_utils_py/blob/main/CONTRIBUTING.rst). 
 
 ### Credits
 
