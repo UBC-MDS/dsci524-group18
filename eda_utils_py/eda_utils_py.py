@@ -110,6 +110,24 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
     >>> outlier_identifier(data)
 
     """
+
+    if not isinstance(dataframe, pd.DataFrame):
+        raise TypeError("The argument @dataframe must be of pd.DataFrame")
+
+    if not isinstance(columns, list):
+        raise TypeError("The argument @columns must be of type list")
+ 
+    if method not in ("trim", "median"):
+        raise Exception("The method must be -trim- or -median-")
+
+    for col in columns:
+        if col not in list(dataframe.columns):
+            raise Exception("The given column list contains column that is not exist in the given dataframe.")    
+
+    for col in columns:
+        if not is_numeric_dtype(dataframe[col]):
+            raise Exception("The given column list contains column that is not numeric column.")
+    
     target_columns = []
     if(columns is None):
         target_columns = list(dataframe.columns.values.tolist()) 
