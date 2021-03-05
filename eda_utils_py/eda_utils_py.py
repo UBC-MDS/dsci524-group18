@@ -16,8 +16,8 @@ def imputer(dataframe, strategy="mean", fill_value=None):
             - If “median”, then replace missing values using the median along each column. Can only be used with numeric data.
             - If “most_frequent”, then replace missing using the most frequent value along each column. Can be used with strings or numeric data. If there is more than one such value, only the smallest is returned.
             - If “constant”, then replace missing values with fill_value. Can be used with strings or numeric data.
-    fill_value : string or numerical value, default=None
-        When strategy == “constant”, fill_value is used to replace all occurrences of missing_values. If left to the default, fill_value will be 0 when imputing numerical data and “missing_value” for strings or object data types.
+    fill_value : numerical value, default=None
+        When strategy == “constant”, fill_value is used to replace all occurrences of missing_values. If left to the default, fill_value will be 0 when imputing numerical data.
         
     Returns
     -------
