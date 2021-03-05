@@ -5,6 +5,44 @@ import pandas as pd
 
 def test_version():
     assert __version__ == '0.1.0'
+    
+    
+def test_imputer():
+    data = pd.DataFrame({
+    'col1':[None, 4, 4, 7], 
+    'col2':[2, None, None, 2],
+    'col3':[3, None, 6, 6]
+    })
+    
+    imt_mean = pd.DataFrame({
+    'col1':[5, 4, 4, 7], 
+    'col2':[2, 2, 2, 2],
+    'col3':[3, 5, 6, 6]
+    })
+    
+    imt_median = pd.DataFrame({
+    'col1':[4, 4, 4, 7], 
+    'col2':[2, 2, 2, 2],
+    'col3':[3, 6, 6, 6]
+    })
+    
+    imt_most_frequent = pd.DataFrame({
+    'col1':[4, 4, 4, 7], 
+    'col2':[2, 2, 2, 2],
+    'col3':[3, 6, 6, 6]
+    })
+    
+    imt_constant = pd.DataFrame({
+    'col1':[1, 4, 4, 7], 
+    'col2':[2, 1, 1, 2],
+    'col3':[3, 1, 6, 6]
+    })
+    assert (eda_utils_py.imputer(data) == imt_mean).all()
+    assert (eda_utils_py.imputer(data, "median") == imt_median).all()
+    assert (eda_utils_py.imputer(data, "most_frequent") == imt_most_frequent).all()
+    assert (eda_utils_py.imputer(data, "constant", 1) == imt_constant).all()
+    
+    
 
 def test_cor_map():
     
