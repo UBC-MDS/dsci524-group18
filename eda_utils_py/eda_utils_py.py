@@ -375,7 +375,7 @@ def _standardize(dataframe):
         The data frame to be used for EDA.
     Returns
     -------
-    self : object
+    res : pandas.core.frame.DataFrame
         Scaled dataset
     """
 
@@ -404,7 +404,7 @@ def _minmax(dataframe):
             The data frame to be used for EDA.
         Returns
         -------
-        self : object
+        res : pandas.core.frame.DataFrame
             Scaled dataset
         """
 
