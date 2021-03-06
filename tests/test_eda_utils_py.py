@@ -2,6 +2,7 @@ from eda_utils_py import __version__
 from eda_utils_py import eda_utils_py
 from pytest import raises
 import pandas as pd
+from pandas._testing import assert_frame_equal
 
 
 def test_version():
@@ -80,7 +81,6 @@ def test_imputer():
 
 
 def test_cor_map():
-
     """
     A function to test whether the output of cor_map() is correct.
     """
@@ -103,7 +103,7 @@ def test_cor_map():
 
     # Tests whether or not there are NaNs produced in the correlation values
     assert (
-        plot.data["cor"].isnull().sum() == 0
+            plot.data["cor"].isnull().sum() == 0
     ), "There are NaN produced as correlation values"
 
     # Tests whether plot output scheme is one of the three given color schemes
@@ -119,20 +119,20 @@ def test_cor_map():
 
     # Tests whether heatmap and correlation values have the same referenced var column
     assert (
-        plot_dict["layer"][0]["encoding"]["x"]["field"]
-        == plot_dict["layer"][1]["encoding"]["x"]["field"]
+            plot_dict["layer"][0]["encoding"]["x"]["field"]
+            == plot_dict["layer"][1]["encoding"]["x"]["field"]
     ), "The heatmap and the correlation values are not referring to the same corresponding underlying variable x"
     assert (
-        plot_dict["layer"][0]["encoding"]["y"]["field"]
-        == plot_dict["layer"][1]["encoding"]["y"]["field"]
+            plot_dict["layer"][0]["encoding"]["y"]["field"]
+            == plot_dict["layer"][1]["encoding"]["y"]["field"]
     ), "The heatmap and the correlation values are not referring to the same corresponding underlying variable y"
 
     # Tests whether axes is using correct calculated var column as reference
     assert (
-        plot_dict["layer"][0]["encoding"]["x"]["field"] == "var1"
+            plot_dict["layer"][0]["encoding"]["x"]["field"] == "var1"
     ), "x should be referring to var1"
     assert (
-        plot_dict["layer"][0]["encoding"]["y"]["field"] == "var2"
+            plot_dict["layer"][0]["encoding"]["y"]["field"] == "var2"
     ), "y should be referring to var2"
 
     # Testing the Exception Errors
@@ -171,3 +171,70 @@ def test_cor_map():
     # Tests whether if not all columns in num_col is numeric raises Exception
     with raises(Exception):
         eda_utils_py.cor_map(data, num_col_test4)
+
+
+def test_scaler():
+    mock_df_1 = pd.DataFrame(
+        {"col1": [1, 0, 0, 3, 4],
+         "col2": [4, 1, 1, 0, 1],
+         "col3": [2, 0, 0, 2, 1]}
+    )
+
+    mock_df_2 = pd.DataFrame(
+        {"col1": [1, 2, 1],
+         "col2": [0, 1, 2]}
+    )
+
+    mock_df_1_standard = pd.DataFrame(
+        {"col1": [-0.3302891295379082, -0.8807710121010884, -0.8807710121010884, 0.7706746355884523, 1.3211565181516325],
+         "col2": [1.714389230829046, -0.26375218935831474, -0.26375218935831474, -0.9231326627541017, -0.26375218935831474],
+         "col3": [1.0, -1.0, -1.0, 1.0, 0.0]}
+    )
+
+    mock_df_1_minmax = pd.DataFrame(
+        {"col1": [0.25, 0.00, 0.00, 0.75, 1.00],
+         "col2": [1.00, 0.25, 0.25, 0.00, 0.25],
+         "col3": [1.0, 0.0, 0.0, 1.0, 0.5]}
+    )
+
+    mock_df_2_standard = pd.DataFrame(
+        {"col1": [-0.5773502691896256, 1.1547005383792517, -0.5773502691896256],
+         "col2": [-1.0, 0.0, 1.0]}
+    )
+
+    mock_df_2_minmax = pd.DataFrame(
+        {"col1": [0.0, 1.0, 0.0],
+         "col2": [0.0, 0.5, 1.0]}
+    )
+
+    standard_scaled_mock_df_1 = eda_utils_py.scale(mock_df_1, ['col1', 'col2', 'col3'])
+    standard_scaled_mock_df_2 = eda_utils_py.scale(mock_df_2, ['col1', 'col2'])
+    minmax_scaled_mock_df_1 = eda_utils_py.scale(mock_df_1, ['col1', 'col2', 'col3'], scaler="minmax")
+    minmax_scaled_mock_df_2 = eda_utils_py.scale(mock_df_2, ['col1', 'col2'], scaler="minmax")
+
+    # Tests whether data is not of type pd.Dataframe raises TypeError
+    with raises(TypeError):
+        eda_utils_py.scale([14, None, 3, 27])
+
+    # Tests whether scaler of incorrect method raises TypeError
+    with raises(TypeError):
+        eda_utils_py.scale(mock_df_1, ['col1', 'col2'], scaler=1)
+
+    # Tests whether columns of incorrect type raises TypeError
+    with raises(TypeError):
+        eda_utils_py.scale(mock_df_1, {'col1': 1, 'col2': 3})
+
+    assert pd.DataFrame.equals(
+        standard_scaled_mock_df_1, mock_df_1_standard
+    ), "The returned dataframe using standard scaler method is not correct"
+    assert pd.DataFrame.equals(
+        minmax_scaled_mock_df_1, mock_df_1_minmax
+    ), "The returned dataframe using standard scaler method is not correct"
+
+
+    assert pd.DataFrame.equals(
+        standard_scaled_mock_df_2, mock_df_2_standard
+    ), "The returned dataframe using most_frequent inputer is not correct"
+    assert pd.DataFrame.equals(
+        minmax_scaled_mock_df_2, mock_df_2_minmax
+    ), "The returned dataframe using constant imputer is not correct"

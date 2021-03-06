@@ -1,5 +1,5 @@
-import pandas as pd
 import altair as alt
+import pandas as pd
 from pandas.api.types import is_numeric_dtype
 import numbers
 
@@ -28,16 +28,16 @@ def imputer(df, strategy="mean", fill_value=None):
 
     Examples
     ---------
-    >>> import pandas as pd
-    >>> from eda_utils_py import cor_map
+    >> import pandas as pd
+    >> from eda_utils_py import cor_map
 
-    >>> data = pd.DataFrame({
-    >>>     'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>>     'SepalWidthCm':[1.4, 1.4, 1.3],
-    >>>     'PetalWidthCm':[0.2, None, 0.2]
-    >>> })
+    >> data = pd.DataFrame({
+    >>     'SepalLengthCm':[5.1, 4.9, 4.7],
+    >>     'SepalWidthCm':[1.4, 1.4, 1.3],
+    >>     'PetalWidthCm':[0.2, None, 0.2]
+    >> })
 
-    >>> imputer(data, numerical_columns)
+    >> imputer(data, numerical_columns)
        SepalLengthCm  SepalWidthCm  PetalWidthCm
     0            5.1           1.4           0.2
     1            4.9           1.4           0.2
@@ -54,7 +54,7 @@ def imputer(df, strategy="mean", fill_value=None):
 
     # Tests whether input fill_value is of type numbers or None
     if not isinstance(fill_value, type(None)) and not isinstance(
-        fill_value, numbers.Number
+            fill_value, numbers.Number
     ):
         raise TypeError("fill_value must be of type None or numeric type")
 
@@ -83,9 +83,7 @@ def imputer(df, strategy="mean", fill_value=None):
     return result
 
 
-
 def cor_map(dataframe, num_col, col_scheme="purpleorange"):
-
     """
     A function to implement a correlation heatmap including coefficients based on given numeric columns of a data frame.
 
@@ -108,19 +106,18 @@ def cor_map(dataframe, num_col, col_scheme="purpleorange"):
 
     Examples
     ---------
-    >>> import pandas as pd
-    >>> from eda_utils_py import cor_map
+    >> import pandas as pd
+    >> from eda_utils_py import cor_map
 
-    >>> data = pd.DataFrame({
-    >>>     'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>>     'SepalWidthCm':[1.4, 1.4, 1.3],
-    >>>     'PetalWidthCm':[0.2, 0.2, 0.2],
-    >>>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
-    >>> })
+    >> data = pd.DataFrame({
+    >>     'SepalLengthCm':[5.1, 4.9, 4.7],
+    >>     'SepalWidthCm':[1.4, 1.4, 1.3],
+    >>     'PetalWidthCm':[0.2, 0.2, 0.2],
+    >>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
+    >> })
 
-    >>> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
-    >>> cor_map(data, numerical_columns, col_scheme = 'purpleorange')
-
+    >> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
+    >> cor_map(data, numerical_columns, col_scheme = 'purpleorange')
     """
 
     # Tests whether input data is of pd.DataFrame type
@@ -161,13 +158,13 @@ def cor_map(dataframe, num_col, col_scheme="purpleorange"):
 
     plot = (
         alt.Chart(corr_matrix)
-        .mark_rect()
-        .encode(
+            .mark_rect()
+            .encode(
             x=alt.X("var1", title=None),
             y=alt.Y("var2", title=None),
             color=alt.Color("cor", legend=None, scale=alt.Scale(scheme=col_scheme)),
         )
-        .properties(title="Correlation Matrix", width=400, height=400)
+            .properties(title="Correlation Matrix", width=400, height=400)
     )
 
     text = plot.mark_text(size=15).encode(
@@ -204,25 +201,25 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
 
     Examples
     --------
-    >>> import pandas as pd
-    >>> from eda_utils_py import cor_map
+    >> import pandas as pd
+    >> from eda_utils_py import cor_map
 
-    >>> data = pd.DataFrame({
-    >>>    'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>>    'SepalWidthCm':[1.4, 1.4, 9999999.99],
-    >>>    'PetalWidthCm:[0.2, 0.2, 0.2],
-    >>>    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
-    >>> })
+    >> data = pd.DataFrame({
+    >>    'SepalLengthCm':[5.1, 4.9, 4.7],
+    >>    'SepalWidthCm':[1.4, 1.4, 9999999.99],
+    >>    'PetalWidthCm:[0.2, 0.2, 0.2],
+    >>    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
+    >> })
 
-    >>> outlier_identifier(data)
+    >> outlier_identifier(data)
 
     """
     pass
 
 
-def scale(dataframe, columns=None):
+def scale(dataframe, columns=None, scaler="standard"):
     """
-    A function to scale features by removing the mean and scaling to unit variance
+    A function to scale features either by using standard scaler or minmax scaler method
 
     Parameters
     ----------
@@ -230,7 +227,11 @@ def scale(dataframe, columns=None):
         The data frame to be used for EDA.
     columns : list, default=None
         A list of string of column names with numeric data from the data frame that we wish to scale.
-
+    scaler: str, default="standard"
+        A string to specify the sclaing method to be used
+            - if "standard": it transforms features by centering the distribution of the data on the value 0 and the standard
+                        deviation to the value 1.
+            - if "minmax": it transforms features by rescaling each feature to the range between 0 and 1.
     Returns
     -------
     dataframe : pandas.core.frame.DataFrame
@@ -238,18 +239,116 @@ def scale(dataframe, columns=None):
 
     Examples
     --------
-    >>> import pandas as pd
-    >>> from eda_utils_py import scale
+    >> import pandas as pd
+    >> from eda_utils_py import scale
 
-    >>> data = pd.DataFrame({
-    >>>     'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>>     'SepalWidthCm':[1.4, 1.4, 1.3],
-    >>>     'PetalWidthCm:[0.2, 0.2, 0.2],
-    >>>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
-    >>> })
+    >> data = pd.DataFrame({
+    >>     'SepalLengthCm':[5.1, 4.9, 4.7],
+    >>     'SepalWidthCm':[1.4, 1.4, 1.3],
+    >>     'PetalWidthCm:[0.2, 0.2, 0.2],
+    >>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
+    >> })
 
-    >>> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
+    >> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
 
-    >>> scale(data, numerical_columns)
+    >> scale(data, numerical_columns, scaler="minmax")
     """
-    pass
+
+    # Check if input data is of pd.DataFrame type
+    if not isinstance(dataframe, pd.DataFrame):
+        raise TypeError("The input dataframe must be of pd.DataFrame type")
+
+    # Check if input num_col is of type list
+    if not isinstance(columns, list):
+        raise TypeError("The input columns must be of type list")
+
+    # Check if values of columns are of type str
+    for col in columns:
+        if not isinstance(col, str):
+            raise TypeError("The name of features in columns list must all be str")
+
+    # Check if all input columns exist in the input data
+    for col in columns:
+        if col not in list(dataframe.columns):
+            raise Exception("The given column names must exist in the given dataframe.")
+
+    # Check if all input columns in num_col are numeric columns
+    for col in columns:
+        if not is_numeric_dtype(dataframe[col]):
+            raise Exception("The given numerical columns must all be numeric.")
+
+    # Check if scaler is of type str
+    if not isinstance(scaler, str):
+        raise TypeError("Scaler must be of type str")
+
+    # Check if all input columns exist in the input data
+    for col in columns:
+        if col not in list(dataframe.columns):
+            raise Exception("The given column names must exist in the given dataframe.")
+
+    # Check if all input columns in num_col are numeric columns
+    for col in columns:
+        if not is_numeric_dtype(dataframe[col]):
+            raise Exception("The given columns must all be numeric.")
+
+    scaled_df = None
+    if scaler == "minmax":
+        scaled_df = _minmax(dataframe[columns])
+    else:
+        scaled_df = _standardize(dataframe[columns])
+
+    return scaled_df
+
+
+def _standardize(dataframe):
+    """Transform features by centering the distribution of the data
+    on the value 0 and the standard deviation to the value 1.
+
+    The transformation is given by:
+
+        scaled_value = (value - mean) / standard deviation
+
+    Parameters
+    ----------
+    dataframe : pandas.DataFrame
+        The data frame to be used for EDA.
+    Returns
+    -------
+    self : object
+        Scaled dataset
+    """
+    res = dataframe.copy()
+    for feature_name in dataframe.columns:
+        mean = dataframe[feature_name].mean()
+        stdev = dataframe[feature_name].std()
+        res[feature_name] = (dataframe[feature_name] - mean) / stdev
+    return res
+
+
+def _minmax(dataframe):
+    """Transform features by rescaling each feature to the range between 0 and 1.
+        The transformation is given by:
+
+            scaled_value = (feature_value - min) / (mix - min)
+
+        where min, max = feature_range.
+
+        This transformation is often used as an alternative to zero mean,
+        unit variance scaling.
+
+        Parameters
+        ----------
+        dataframe : pandas.DataFrame
+            The data frame to be used for EDA.
+        Returns
+        -------
+        self : object
+            Scaled dataset
+        """
+
+    res = dataframe.copy()
+    for feature_name in dataframe.columns:
+        max = dataframe[feature_name].max()
+        min = dataframe[feature_name].min()
+        res[feature_name] = (dataframe[feature_name] - min) / (max - min)
+    return res
