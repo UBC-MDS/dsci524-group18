@@ -5,6 +5,7 @@ import numbers
 import numpy as np
 
 
+
 def imputer(df, strategy="mean", fill_value=None):
     """
     A function to implement imputation functionality for completing missing values.
@@ -66,6 +67,7 @@ def imputer(df, strategy="mean", fill_value=None):
     # Tests whether the inputs for strategy and fill_value are consistent
     if isinstance(fill_value, type(None)) and strategy == "constant":
         raise Exception("fill_value should be a number when strategy is 'constant'")
+
 
     result = pd.DataFrame()
     if strategy == "mean":
@@ -185,22 +187,23 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
     A function that identify by z-test with threshold of 3, and deal with outliers based on the method the user choose
 
     Parameters
-    ---------- 
+    ----------
     dataframe : pandas.core.frame.DataFrame
         The target dataframe where the function is performed.
     columns : list, default=None
         The target columns where the function needed to be performed. Defualt is None, the function will check all columns
     method : string
-        The method of dealing with outliers. 
+        The method of dealing with outliers.
             - if "trim" : we completely remove data points that are outliers.
             - if "median" : we replace outliers with median values
             - if "mean" : we replace outliers with mean values
         
+
     Returns
     -------
     pandas.core.frame.DataFrame
         a dataframe which the outlier has already process by the chosen method
-    
+
     Examples
     --------
     >>> import pandas as pd
@@ -214,6 +217,7 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
     >>> })
 
     >>> outlier_identifier(data)
+
 
     """
     if not isinstance(dataframe, pd.DataFrame):
@@ -237,7 +241,6 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
  
     if method not in ("trim", "median", "mean"):
         raise Exception("The method must be -trim- or -median- or -mean-")
-
     
     df = dataframe.copy()
     target_columns = []
@@ -273,6 +276,8 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
     return df
 
 
+
+  
 def scale(dataframe, columns=None, scaler="standard"):
     """
     A function to scale features either by using standard scaler or minmax scaler method
@@ -373,6 +378,7 @@ def _standardize(dataframe):
     self : object
         Scaled dataset
     """
+
     res = dataframe.copy()
     for feature_name in dataframe.columns:
         mean = dataframe[feature_name].mean()
@@ -407,4 +413,7 @@ def _minmax(dataframe):
         max = dataframe[feature_name].max()
         min = dataframe[feature_name].min()
         res[feature_name] = (dataframe[feature_name] - min) / (max - min)
+
     return res
+
+

@@ -6,6 +6,7 @@ from pandas._testing import assert_frame_equal
 import numpy as np
 
 
+
 def test_version():
     assert __version__ == "0.1.0"
 
@@ -241,6 +242,7 @@ def test_scaler():
     ), "The returned dataframe using constant imputer is not correct"
 
 
+
 def test_outlier_identifier():
     test_df = pd.DataFrame({
         'SepalLengthCm': [5.1, 4.9, 4.7, 5.5, 5.1, 50, 5.4, 5.0, 5.2, 5.3, 5.1],
@@ -311,3 +313,4 @@ def test_outlier_identifier():
     assert pd.DataFrame.equals(
         eda_utils_py.outlier_identifier(test_df, columns = ["SepalLengthCm"], method = "mean"), column_output
     ), "The selected column method is not correct"
+
