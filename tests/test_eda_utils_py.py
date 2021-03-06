@@ -4,7 +4,7 @@ import pandas as pd
 import altair as alt
 from pandas.api.types import is_numeric_dtype
 import numpy as np
-
+from pytest import raises
 
 def test_version():
     assert __version__ == '0.1.0'
@@ -49,34 +49,34 @@ def test_outlier_identifier():
     })
 
     # Test if the imput is not dataFrame
-    with raise(TypeError):
+    with raises(TypeError):
         eda_utils_py.outlier_identifier("not dataframe")
 
     # Test if columns input is not list
-    with raise(TypeError):
+    with raises(TypeError):
         eda_utils_py.outlier_identifier(test_df, columns=2)
 
     # Test if input column list is in the dataframe
-    with raise(TypeError):
+    with raises(Exception):
         eda_utils_py.outlier_identifier(test_df, columns=["not in"])
 
     # Test if method input is not one of three methods provided
-    with raise(TypeError):
+    with raises(Exception):
         eda_utils_py.outlier_identifier(test_df, columns=["SepalLengthCm"], method = "no")
 
     # Test if column selected included non-numeric columns
-    with raise(Exception):
+    with raises(Exception):
         eda_utils_py.outlier_identifier(test_df, columns=["Species"])
 
     assert pd.DataFrame.equals(
-        outlier_identifier(test_df, test_column), trim_output
+        eda_utils_py.outlier_identifier(test_df, test_column), trim_output
     ), "Default test not pass"
     assert pd.DataFrame.equals(
-        outlier_identifier(test_df, test_column,method = "median"), median_output
+        eda_utils_py.outlier_identifier(test_df, test_column,method = "median"), median_output
     ), "The median method is not correct"
     assert pd.DataFrame.equals(
-        outlier_identifier(test_df, test_column, method = "mean"), mean_output
+        eda_utils_py.outlier_identifier(test_df, test_column, method = "mean"), mean_output
     ), "The mean method is not correct"
     assert pd.DataFrame.equals(
-        outlier_identifier(test_df, columns = ["SepalLengthCm"], method = "mean"), column_output
+        eda_utils_py.outlier_identifier(test_df, columns = ["SepalLengthCm"], method = "mean"), column_output
     ), "The selected column method is not correct"
