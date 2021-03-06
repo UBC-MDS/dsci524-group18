@@ -224,7 +224,7 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
 
 def scale(dataframe, columns=None, scaler="standard"):
     """
-    A function to scale features by removing the mean and scaling to unit variance
+    A function to scale features either by using standard scaler or minmax scaler method
 
     Parameters
     ----------
