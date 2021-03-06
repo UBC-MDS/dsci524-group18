@@ -3,7 +3,7 @@ import pandas as pd
 from pandas.api.types import is_numeric_dtype
 import numbers
 
-from eda_utils_py.utils import _get_dataframe_means, _get_dataframe_stdevs, _minmax, _standardize, _get_dataframe_minmax
+from utils import _minmax, _standardize
 
 
 
@@ -293,14 +293,10 @@ def scale(dataframe, columns=None, scaler="standard"):
         if not is_numeric_dtype(dataframe[col]):
             raise Exception("The given columns must all be numeric.")
 
-    scaler = None
-
+    scaled_df = None
     if scaler == "minmax":
-        minmax = _get_dataframe_minmax(dataframe[columns])
-        scaler = _minmax(dataframe[columns], minmax)
+        scaled_df = _minmax(dataframe[columns])
     else:
-        means = _get_dataframe_means(dataframe[columns])
-        stdevs = _get_dataframe_stdevs(dataframe[columns], means)
-        scaler = _standardize(dataframe[columns], means, stdevs)
+        scaled_df = _standardize(dataframe[columns])
 
-    return scaler
+    return scaled_df
