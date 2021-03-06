@@ -3,9 +3,6 @@ import pandas as pd
 from pandas.api.types import is_numeric_dtype
 import numbers
 
-from utils import _minmax, _standardize
-
-
 
 def imputer(df, strategy="mean", fill_value=None):
     """
@@ -31,16 +28,16 @@ def imputer(df, strategy="mean", fill_value=None):
 
     Examples
     ---------
-    >>> import pandas as pd
-    >>> from eda_utils_py import cor_map
+    >> import pandas as pd
+    >> from eda_utils_py import cor_map
 
-    >>> data = pd.DataFrame({
-    >>>     'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>>     'SepalWidthCm':[1.4, 1.4, 1.3],
-    >>>     'PetalWidthCm':[0.2, None, 0.2]
-    >>> })
+    >> data = pd.DataFrame({
+    >>     'SepalLengthCm':[5.1, 4.9, 4.7],
+    >>     'SepalWidthCm':[1.4, 1.4, 1.3],
+    >>     'PetalWidthCm':[0.2, None, 0.2]
+    >> })
 
-    >>> imputer(data, numerical_columns)
+    >> imputer(data, numerical_columns)
        SepalLengthCm  SepalWidthCm  PetalWidthCm
     0            5.1           1.4           0.2
     1            4.9           1.4           0.2
@@ -57,7 +54,7 @@ def imputer(df, strategy="mean", fill_value=None):
 
     # Tests whether input fill_value is of type numbers or None
     if not isinstance(fill_value, type(None)) and not isinstance(
-        fill_value, numbers.Number
+            fill_value, numbers.Number
     ):
         raise TypeError("fill_value must be of type None or numeric type")
 
@@ -86,9 +83,7 @@ def imputer(df, strategy="mean", fill_value=None):
     return result
 
 
-
 def cor_map(dataframe, num_col, col_scheme="purpleorange"):
-
     """
     A function to implement a correlation heatmap including coefficients based on given numeric columns of a data frame.
 
@@ -163,13 +158,13 @@ def cor_map(dataframe, num_col, col_scheme="purpleorange"):
 
     plot = (
         alt.Chart(corr_matrix)
-        .mark_rect()
-        .encode(
+            .mark_rect()
+            .encode(
             x=alt.X("var1", title=None),
             y=alt.Y("var2", title=None),
             color=alt.Color("cor", legend=None, scale=alt.Scale(scheme=col_scheme)),
         )
-        .properties(title="Correlation Matrix", width=400, height=400)
+            .properties(title="Correlation Matrix", width=400, height=400)
     )
 
     text = plot.mark_text(size=15).encode(
@@ -278,10 +273,9 @@ def scale(dataframe, columns=None, scaler="standard"):
         if not is_numeric_dtype(dataframe[col]):
             raise Exception("The given numerical columns must all be numeric.")
 
-    # Check if scaler is either standard or minmax
-    if scaler not in ('standard', 'minmax'):
-        raise Exception(
-            "The methods available for the scaler are 'standard' and 'minmax'")
+    # Check if scaler is of type str
+    if not isinstance(scaler, str):
+        raise TypeError("Scaler must be of type str")
 
     # Check if all input columns exist in the input data
     for col in columns:
@@ -300,3 +294,81 @@ def scale(dataframe, columns=None, scaler="standard"):
         scaled_df = _standardize(dataframe[columns])
 
     return scaled_df
+
+
+def _standardize(dataframe):
+    """Transform features by centering the distribution of the data
+    on the value 0 and the standard deviation to the value 1.
+
+    The transformation is given by:
+
+        scaled_value = (value - mean) / standard deviation
+
+    Parameters
+    ----------
+    dataframe : pandas.DataFrame
+        The data frame to be used for EDA.
+    Returns
+    -------
+    self : object
+        Scaled dataset
+    """
+    res = dataframe.copy()
+    for feature_name in dataframe.columns:
+        mean = dataframe[feature_name].mean()
+        stdev = dataframe[feature_name].std()
+        res[feature_name] = (dataframe[feature_name] - mean) / stdev
+    return res
+
+
+def _minmax(dataframe):
+    """Transform features by rescaling each feature to the range between 0 and 1.
+        The transformation is given by:
+
+            scaled_value = (feature_value - min) / (mix - min)
+
+        where min, max = feature_range.
+
+        This transformation is often used as an alternative to zero mean,
+        unit variance scaling.
+
+        Parameters
+        ----------
+        dataframe : pandas.DataFrame
+            The data frame to be used for EDA.
+        Returns
+        -------
+        self : object
+            Scaled dataset
+        """
+
+    res = dataframe.copy()
+    for feature_name in dataframe.columns:
+        max = dataframe[feature_name].max()
+        min = dataframe[feature_name].min()
+        res[feature_name] = (dataframe[feature_name] - min) / (max - min)
+    return res
+
+
+data = pd.DataFrame({
+    'SepalLengthCm':[1, 0, 0, 3, 4],
+    'SepalWidthCm':[4, 1, 1, 0, 1],
+    'PetalWidthCm':[2, 0, 0, 2, 1],
+    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica', 'df', 'sdf']
+    })
+
+
+dataset2 = pd.DataFrame({
+    'SepalLengthCm':[50, 20, 30],
+    'SepalWidthCm':[30, 90, 50],
+    # 'PetalWidthCm':[30, 50],
+    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
+    })
+
+dataset3 = pd.DataFrame({
+    'SepalLengthCm':[1, 2, 1],
+    'SepalWidthCm':[0, 1, 2],
+    # 'PetalWidthCm':[30, 50],
+    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
+    })
+print(scale(data, ['SepalLengthCm', 'SepalWidthCm', 'PetalWidthCm']))
