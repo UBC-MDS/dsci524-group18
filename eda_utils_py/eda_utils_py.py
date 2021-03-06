@@ -5,7 +5,6 @@ import numbers
 import numpy as np
 
 
-
 def imputer(df, strategy="mean", fill_value=None):
     """
     A function to implement imputation functionality for completing missing values.
@@ -67,7 +66,6 @@ def imputer(df, strategy="mean", fill_value=None):
     # Tests whether the inputs for strategy and fill_value are consistent
     if isinstance(fill_value, type(None)) and strategy == "constant":
         raise Exception("fill_value should be a number when strategy is 'constant'")
-
 
     result = pd.DataFrame()
     if strategy == "mean":
@@ -226,59 +224,54 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
     if columns is None:
         for col in dataframe.columns:
             if not is_numeric_dtype(dataframe[col]):
-                raise Exception("The given dataframe contains column that is not numeric column.")  
-                
+                raise Exception("The given dataframe contains column that is not numeric column.")
+
     if columns is not None:
         if not isinstance(columns, list):
             raise TypeError("The argument @columns must be of type list")
-          
-        
+
         for col in columns:
             if col not in list(dataframe.columns):
-                raise Exception("The given column list contains column that is not exist in the given dataframe.")    
+                raise Exception("The given column list contains column that is not exist in the given dataframe.")
             if not is_numeric_dtype(dataframe[col]):
                 raise Exception("The given column list contains column that is not numeric column.")
- 
+
     if method not in ("trim", "median", "mean"):
         raise Exception("The method must be -trim- or -median- or -mean-")
-    
+
     df = dataframe.copy()
     target_columns = []
-    if(columns is None):
-        target_columns = list(df.columns.values.tolist()) 
+    if (columns is None):
+        target_columns = list(df.columns.values.tolist())
     else:
         target_columns = columns
-        
+
     outlier_index = []
     for column in target_columns:
         current_column = df[column]
         mean = np.mean(current_column)
         std = np.std(current_column)
-        threshold = 3 
-        
-        
+        threshold = 3
+
         for i in range(len(current_column)):
             current_item = current_column[i]
             z = (current_item - mean) / std
             if z >= threshold:
-                if(i not in outlier_index):
+                if (i not in outlier_index):
                     outlier_index.append(i)
-                if(method == "mean"):
+                if (method == "mean"):
                     df.at[i, column] = round(mean, 2)
-                if(method == "median"):
+                if (method == "median"):
                     df.at[i, column] = np.median(current_column)
-                
-    
-    if(method == "trim"):
+
+    if (method == "trim"):
         df = df.drop(outlier_index)
-        
+
     df.index = range(len(df))
     return df
 
 
-
-  
-def scale(dataframe, columns=None, scaler="standard"):
+def scale(dataframe, columns, scaler="standard"):
     """
     A function to scale features either by using standard scaler or minmax scaler method
 
@@ -415,5 +408,3 @@ def _minmax(dataframe):
         res[feature_name] = (dataframe[feature_name] - min) / (max - min)
 
     return res
-
-
