@@ -109,7 +109,7 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
         
     >>> data = pd.DataFrame({
     >>>    'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>>    'SepalWidthCm':[1.4, 1.4, 9999999.99],
+    >>>    'SepalWidthCm':[1.4, 1.4, 99],
     >>>    'PetalWidthCm:[0.2, 0.2, 0.2],
     >>>    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
     >>> })
@@ -117,13 +117,18 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
     >>> outlier_identifier(data)
 
     """
-
     if not isinstance(dataframe, pd.DataFrame):
         raise TypeError("The argument @dataframe must be of pd.DataFrame")
 
+    if columns is None:
+        for col in dataframe.columns:
+            if not is_numeric_dtype(dataframe[col]):
+                raise Exception("The given dataframe contains column that is not numeric column.")  
+                
     if columns is not None:
         if not isinstance(columns, list):
             raise TypeError("The argument @columns must be of type list")
+          
         
         for col in columns:
             if col not in list(dataframe.columns):
@@ -135,18 +140,20 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
         raise Exception("The method must be -trim- or -median- or -mean-")
 
     
+    df = dataframe.copy()
     target_columns = []
     if(columns is None):
-        target_columns = list(dataframe.columns.values.tolist()) 
+        target_columns = list(df.columns.values.tolist()) 
+    else:
+        target_columns = columns
         
-    
-
     outlier_index = []
     for column in target_columns:
-        current_column = dataframe[column]
+        current_column = df[column]
         mean = np.mean(current_column)
         std = np.std(current_column)
         threshold = 3 
+        
         
         for i in range(len(current_column)):
             current_item = current_column[i]
@@ -154,15 +161,17 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
             if z >= threshold:
                 if(i not in outlier_index):
                     outlier_index.append(i)
-                if(method == "median"):
-                    dataframe[column][i] = np.median(current_column)
                 if(method == "mean"):
-                    dataframe[column][i] = np.mean(current_column)
+                    df.at[i, column] = round(mean, 2)
+                if(method == "median"):
+                    df.at[i, column] = np.median(current_column)
+                
     
     if(method == "trim"):
-        dataframe = dataframe.drop(outlier_index)
-
-    return dataframe
+        df = df.drop(outlier_index)
+        
+    df.index = range(len(df))
+    return df
 
 
 def scale(dataframe, columns=None):
