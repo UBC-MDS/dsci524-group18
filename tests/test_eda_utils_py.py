@@ -3,57 +3,147 @@ from eda_utils_py import eda_utils_py
 from pytest import raises
 import pandas as pd
 
+
 def test_version():
-    assert __version__ == '0.1.0'
+    assert __version__ == "0.1.0"
+
+
+def test_imputer():
+    data = pd.DataFrame(
+        {"col1": [None, 4, 4, 7], "col2": [2, None, None, 2], "col3": [3, None, 6, 6]}
+    )
+
+    imp_mean = pd.DataFrame(
+        {
+            "col1": [5.0, 4.0, 4.0, 7.0],
+            "col2": [2.0, 2.0, 2.0, 2.0],
+            "col3": [3.0, 5.0, 6.0, 6.0],
+        }
+    )
+
+    imp_median = pd.DataFrame(
+        {
+            "col1": [4.0, 4.0, 4.0, 7.0],
+            "col2": [2.0, 2.0, 2.0, 2.0],
+            "col3": [3.0, 6.0, 6.0, 6.0],
+        }
+    )
+
+    imp_most_frequent = pd.DataFrame(
+        {
+            "col1": [4.0, 4.0, 4.0, 7.0],
+            "col2": [2.0, 2.0, 2.0, 2.0],
+            "col3": [3.0, 6.0, 6.0, 6.0],
+        }
+    )
+
+    imp_constant = pd.DataFrame(
+        {
+            "col1": [1.0, 4.0, 4.0, 7.0],
+            "col2": [2.0, 1.0, 1.0, 2.0],
+            "col3": [3.0, 1.0, 6.0, 6.0],
+        }
+    )
+
+    # Tests whether data is not of dataframe raises TypeError
+    with raises(TypeError):
+        eda_utils_py.imputer([4, None, 4, 7])
+
+    # Tests whether strategy of incorrect type raises TypeError
+    with raises(TypeError):
+        eda_utils_py.imputer(data, strategy=2)
+
+    # Tests whether fill_value of incorrect type raises TypeError
+    with raises(TypeError):
+        eda_utils_py.imputer(data, strategy="constant", fill_value="a string")
+
+    # Tests whether inconsistency between strategy and fill_value raises Exception
+    with raises(Exception):
+        eda_utils_py.imputer(data, strategy="constant", fill_value=None)
+
+    # Tests whether inconsistency between strategy and fill_value raises Exception
+    with raises(Exception):
+        eda_utils_py.imputer(data, strategy="median", fill_value=3)
+
+    assert pd.DataFrame.equals(
+        eda_utils_py.imputer(data), imp_mean
+    ), "The returned dataframe using mean inputer is not correct"
+    assert pd.DataFrame.equals(
+        eda_utils_py.imputer(data, "median"), imp_median
+    ), "The returned dataframe using median inputer is not correct"
+    assert pd.DataFrame.equals(
+        eda_utils_py.imputer(data, "most_frequent"), imp_most_frequent
+    ), "The returned dataframe using most_frequent inputer is not correct"
+    assert pd.DataFrame.equals(
+        eda_utils_py.imputer(data, "constant", 1), imp_constant
+    ), "The returned dataframe using constant imputer is not correct"
+
 
 def test_cor_map():
-    
+
     """
     A function to test whether the output of cor_map() is correct.
     """
-    
-    data = pd.DataFrame({
-    'SepalLengthCm':[5.1, 4.9, 4.7], 
-    'SepalWidthCm':[1.4, 1.4, 1.3],
-    'PetalWidthCm':[0.2, 0.1, 0.2],
-    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
-    })
-    
-    num_col_test = ['SepalLengthCm', 'SepalWidthCm', 'PetalWidthCm']
-    
-    plot = eda_utils_py.cor_map(data, num_col_test, 'redblue')
-    
+
+    data = pd.DataFrame(
+        {
+            "SepalLengthCm": [5.1, 4.9, 4.7],
+            "SepalWidthCm": [1.4, 1.4, 1.3],
+            "PetalWidthCm": [0.2, 0.1, 0.2],
+            "Species": ["Iris-setosa", "Iris-virginica", "Iris-germanica"],
+        }
+    )
+
+    num_col_test = ["SepalLengthCm", "SepalWidthCm", "PetalWidthCm"]
+
+    plot = eda_utils_py.cor_map(data, num_col_test, "redblue")
+
     # Tests whether output is of Altair type
     assert "altair" in str(type(plot)), "Output is not of Altair type"
-    
+
     # Tests whether or not there are NaNs produced in the correlation values
-    assert plot.data['cor'].isnull().sum() == 0, "There are NaN produced as correlation values"
-    
+    assert (
+        plot.data["cor"].isnull().sum() == 0
+    ), "There are NaN produced as correlation values"
+
     # Tests whether plot output scheme is one of the three given color schemes
-    plot_dict = plot.to_dict() 
-    assert plot_dict["layer"][0]['encoding']['color']['scale']['scheme'] in ('purpleorange','blueorange', 'redblue'), "The plot color scheme is not one of the expected schemes"
-    
+    plot_dict = plot.to_dict()
+    assert plot_dict["layer"][0]["encoding"]["color"]["scale"]["scheme"] in (
+        "purpleorange",
+        "blueorange",
+        "redblue",
+    ), "The plot color scheme is not one of the expected schemes"
+
     # Tests whether heatmap portion of plot is mark_rect()
-    assert plot_dict["layer"][0]['mark'] == 'rect', "mark should be rect"
-    
+    assert plot_dict["layer"][0]["mark"] == "rect", "mark should be rect"
+
     # Tests whether heatmap and correlation values have the same referenced var column
-    assert plot_dict['layer'][0]['encoding']['x']['field'] == plot_dict['layer'][1]['encoding']['x']['field'], "The heatmap and the correlation values are not referring to the same corresponding underlying variable x"
-    assert plot_dict['layer'][0]['encoding']['y']['field'] == plot_dict['layer'][1]['encoding']['y']['field'], "The heatmap and the correlation values are not referring to the same corresponding underlying variable y"
-    
+    assert (
+        plot_dict["layer"][0]["encoding"]["x"]["field"]
+        == plot_dict["layer"][1]["encoding"]["x"]["field"]
+    ), "The heatmap and the correlation values are not referring to the same corresponding underlying variable x"
+    assert (
+        plot_dict["layer"][0]["encoding"]["y"]["field"]
+        == plot_dict["layer"][1]["encoding"]["y"]["field"]
+    ), "The heatmap and the correlation values are not referring to the same corresponding underlying variable y"
+
     # Tests whether axes is using correct calculated var column as reference
-    assert plot_dict['layer'][0]['encoding']['x']['field'] == 'var1', "x should be referring to var1"
-    assert plot_dict['layer'][0]['encoding']['y']['field'] == 'var2', "y should be referring to var2"
-    
-    
+    assert (
+        plot_dict["layer"][0]["encoding"]["x"]["field"] == "var1"
+    ), "x should be referring to var1"
+    assert (
+        plot_dict["layer"][0]["encoding"]["y"]["field"] == "var2"
+    ), "y should be referring to var2"
+
     # Testing the Exception Errors
     data2 = data.copy().to_csv()
 
     num_col_test1 = (1, 2, 3, 4)
-    num_col_test2 = [1, 2, 3, 'SepalLengthCm']
-    num_col_test3 = ['hi', 'hey', 'hi']
-    num_col_test4 = ['SepalLengthCm', 'SepalWidthCm', 'PetalWidthCm', 'Species']
+    num_col_test2 = [1, 2, 3, "SepalLengthCm"]
+    num_col_test3 = ["hi", "hey", "hi"]
+    num_col_test4 = ["SepalLengthCm", "SepalWidthCm", "PetalWidthCm", "Species"]
     col_scheme_test = 3
-    
+
     # Tests whether data is not of dataframe raises TypeError
     with raises(TypeError):
         eda_utils_py.cor_map(data2, num_col_test)
@@ -68,7 +158,7 @@ def test_cor_map():
 
     # Tests whether inputting unallowed col_scheme raises Exception
     with raises(Exception):
-        eda_utils_py.cor_map(data, num_col_test, 'bluegreen')
+        eda_utils_py.cor_map(data, num_col_test, "bluegreen")
 
     # Tests whether inputting unallowed col_scheme raises TypeError
     with raises(TypeError):
