@@ -1,3 +1,9 @@
+import pandas as pd
+import altair as alt
+from pandas.api.types import is_numeric_dtype
+import numpy as np
+
+
 def imputer(dataframe, strategy="mean", fill_value=None):
     """
     A function to implement imputation functionality for completing missing values.
@@ -77,7 +83,7 @@ def cor_map(dataframe, num_col):
 
 def outlier_identifier(dataframe, columns=None, method="trim"):
     """
-    A function that identify and deal with outliers based on the method the user choose
+    A function that identify by z-test with threshold of 3, and deal with outliers based on the method the user choose
 
     Parameters
     ---------- 
@@ -89,6 +95,7 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
         The method of dealing with outliers. 
             - if "trim" : we completely remove data points that are outliers.
             - if "median" : we replace outliers with median values
+            - if "mean" : we replace outliers with mean values
         
     Returns
     -------
@@ -114,31 +121,32 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
     if not isinstance(dataframe, pd.DataFrame):
         raise TypeError("The argument @dataframe must be of pd.DataFrame")
 
-    if not isinstance(columns, list):
-        raise TypeError("The argument @columns must be of type list")
+    if columns is not None:
+        if not isinstance(columns, list):
+            raise TypeError("The argument @columns must be of type list")
+        
+        for col in columns:
+            if col not in list(dataframe.columns):
+                raise Exception("The given column list contains column that is not exist in the given dataframe.")    
+            if not is_numeric_dtype(dataframe[col]):
+                raise Exception("The given column list contains column that is not numeric column.")
  
-    if method not in ("trim", "median"):
-        raise Exception("The method must be -trim- or -median-")
+    if method not in ("trim", "median", "mean"):
+        raise Exception("The method must be -trim- or -median- or -mean-")
 
-    for col in columns:
-        if col not in list(dataframe.columns):
-            raise Exception("The given column list contains column that is not exist in the given dataframe.")    
-
-    for col in columns:
-        if not is_numeric_dtype(dataframe[col]):
-            raise Exception("The given column list contains column that is not numeric column.")
     
     target_columns = []
     if(columns is None):
         target_columns = list(dataframe.columns.values.tolist()) 
         
-        
+    
+
     outlier_index = []
     for column in target_columns:
         current_column = dataframe[column]
         mean = np.mean(current_column)
         std = np.std(current_column)
-        threshold = 3
+        threshold = 3 
         
         for i in range(len(current_column)):
             current_item = current_column[i]
@@ -147,11 +155,13 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
                 if(i not in outlier_index):
                     outlier_index.append(i)
                 if(method == "median"):
-                    m = np.median(current_column)
-                    dataframe[column][i] = m
+                    dataframe[column][i] = np.median(current_column)
+                if(method == "mean"):
+                    dataframe[column][i] = np.mean(current_column)
     
     if(method == "trim"):
         dataframe = dataframe.drop(outlier_index)
+
     return dataframe
 
 
