@@ -227,7 +227,11 @@ def scale(dataframe, columns=None, scaler="standard"):
         The data frame to be used for EDA.
     columns : list, default=None
         A list of string of column names with numeric data from the data frame that we wish to scale.
-    TODO update docstring
+    scaler: str, default="standard"
+        A string to specify the sclaing method to be used
+            - if "standard": it transforms features by centering the distribution of the data on the value 0 and the standard
+                        deviation to the value 1.
+            - if "minmax": it transforms features by rescaling each feature to the range between 0 and 1.
     Returns
     -------
     dataframe : pandas.core.frame.DataFrame
