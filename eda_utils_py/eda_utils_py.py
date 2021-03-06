@@ -348,27 +348,3 @@ def _minmax(dataframe):
         min = dataframe[feature_name].min()
         res[feature_name] = (dataframe[feature_name] - min) / (max - min)
     return res
-
-
-data = pd.DataFrame({
-    'SepalLengthCm':[1, 0, 0, 3, 4],
-    'SepalWidthCm':[4, 1, 1, 0, 1],
-    'PetalWidthCm':[2, 0, 0, 2, 1],
-    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica', 'df', 'sdf']
-    })
-
-
-dataset2 = pd.DataFrame({
-    'SepalLengthCm':[50, 20, 30],
-    'SepalWidthCm':[30, 90, 50],
-    # 'PetalWidthCm':[30, 50],
-    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
-    })
-
-dataset3 = pd.DataFrame({
-    'SepalLengthCm':[1, 2, 1],
-    'SepalWidthCm':[0, 1, 2],
-    # 'PetalWidthCm':[30, 50],
-    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
-    })
-print(scale(data, ['SepalLengthCm', 'SepalWidthCm', 'PetalWidthCm']))

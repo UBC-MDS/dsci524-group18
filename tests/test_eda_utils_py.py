@@ -214,7 +214,7 @@ def test_scaler():
 
     # Tests whether data is not of type pd.Dataframe raises TypeError
     with raises(TypeError):
-        eda_utils_py.scale([4, None, 4, 7])
+        eda_utils_py.scale([14, None, 3, 27])
 
     # Tests whether scaler of incorrect method raises TypeError
     with raises(TypeError):
