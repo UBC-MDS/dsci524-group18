@@ -163,7 +163,7 @@ def cor_map(dataframe, num_col, col_scheme="purpleorange"):
             .encode(
             x=alt.X("var1", title=None),
             y=alt.Y("var2", title=None),
-            color=alt.Color("cor", legend=None, scale=alt.Scale(scheme=col_scheme)),
+            color=alt.Color("cor", title = 'Correlation', scale=alt.Scale(scheme=col_scheme, domain = (-1,1))),
         )
             .properties(title="Correlation Matrix", width=400, height=400)
     )
