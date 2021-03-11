@@ -113,7 +113,7 @@ def cor_map(dataframe, num_col, col_scheme="purpleorange"):
     >> data = pd.DataFrame({
     >>     'SepalLengthCm':[5.1, 4.9, 4.7],
     >>     'SepalWidthCm':[1.4, 1.4, 1.3],
-    >>     'PetalWidthCm':[0.2, 0.2, 0.2],
+    >>     'PetalWidthCm':[0.2, 0.1, 0.2],
     >>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
     >> })
 
