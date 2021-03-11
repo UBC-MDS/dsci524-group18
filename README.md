@@ -37,12 +37,36 @@ The eda_utils_py package help you to build exploratory data analysis.
 
 eda_utils_py includes multiple custom functions to perform initial exploratory analysis on any input data describing the structure and the relationships present in the data. The generated output can be obtained in both object and graphical form. 
 
-The eda_utils_py is capable of :
-- Diagnose data quality : Resolve skewed data by identifing missing data and outlier and provide corresponding remedy.
-- Discover data: Plot correlation mattrix to help explore data to understand the data and find scenarios for performing the analysis.
-- Machine learning pereperation : Perform column transformations, derive scaler automatically to fulfill further machine learning need
-    
+```python
+import pandas as pd
+from eda_utils_py import eda_utils_py
 
+data = pd.DataFrame({
+         'SepalLengthCm':[5.1, 4.9, 4.7],
+         'SepalWidthCm':[1.4, 1.4, 1.3],
+         'PetalWidthCm':[0.2, 0.1, 0.2],
+         'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
+         })
+```
+
+The eda_utils_py will help you to:
+- Diagnose data quality: Resolve skewed data by identifing missing data and outlier and provide corresponding remedy.
+
+
+- This package can help you easily plot a correlation matrix along with its values to help explore data.
+
+```python
+numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
+
+cor_map(data, numerical_columns, col_scheme = 'purpleorange')
+
+```
+Output:
+
+![cor_map_output](images/cor_map_output.png)
+
+- Machine learning pereperation: Perform column transformations, derive scaler automatically to fulfill further machine learning need
+    
 ## Documentation
 
 The official documentation is hosted on Read the Docs: https://eda_utils_py.readthedocs.io/en/latest/
