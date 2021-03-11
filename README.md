@@ -63,7 +63,7 @@ cor_map(data, numerical_columns, col_scheme = 'purpleorange')
 ```
 Output:
 
-![cor_map_output](images/cor_map_output.png)
+![cor_map_output](images/cor_map.output.png)
 
 - Machine learning pereperation: Perform column transformations, derive scaler automatically to fulfill further machine learning need
     
