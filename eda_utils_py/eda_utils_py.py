@@ -113,7 +113,7 @@ def cor_map(dataframe, num_col, col_scheme="purpleorange"):
     >> data = pd.DataFrame({
     >>     'SepalLengthCm':[5.1, 4.9, 4.7],
     >>     'SepalWidthCm':[1.4, 1.4, 1.3],
-    >>     'PetalWidthCm':[0.2, 0.2, 0.2],
+    >>     'PetalWidthCm':[0.2, 0.1, 0.2],
     >>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
     >> })
 
@@ -163,7 +163,7 @@ def cor_map(dataframe, num_col, col_scheme="purpleorange"):
             .encode(
             x=alt.X("var1", title=None),
             y=alt.Y("var2", title=None),
-            color=alt.Color("cor", legend=None, scale=alt.Scale(scheme=col_scheme)),
+            color=alt.Color("cor", title = 'Correlation', scale=alt.Scale(scheme=col_scheme, domain = (-1,1))),
         )
             .properties(title="Correlation Matrix", width=400, height=400)
     )
