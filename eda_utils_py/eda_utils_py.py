@@ -204,17 +204,17 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
 
     Examples
     --------
-    >>> import pandas as pd
-    >>> from eda_utils_py import cor_map
+    >> import pandas as pd
+    >> from eda_utils_py import cor_map
         
-    >>> data = pd.DataFrame({
-    >>>    'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>>    'SepalWidthCm':[1.4, 1.4, 99],
-    >>>    'PetalWidthCm:[0.2, 0.2, 0.2],
-    >>>    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
-    >>> })
+    >> data = pd.DataFrame({
+    >>    'SepalLengthCm':[5.1, 4.9, 4.7],
+    >>    'SepalWidthCm':[1.4, 1.4, 99],
+    >>    'PetalWidthCm:[0.2, 0.2, 0.2],
+    >>    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
+    >> })
 
-    >>> outlier_identifier(data)
+    >> outlier_identifier(data)
 
 
     """
