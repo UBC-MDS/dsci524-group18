@@ -204,17 +204,17 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
 
     Examples
     --------
-    >>> import pandas as pd
-    >>> from eda_utils_py import cor_map
+    >> import pandas as pd
+    >> from eda_utils_py import cor_map
         
-    >>> data = pd.DataFrame({
-    >>>    'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>>    'SepalWidthCm':[1.4, 1.4, 99],
-    >>>    'PetalWidthCm:[0.2, 0.2, 0.2],
-    >>>    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
-    >>> })
+    >> data = pd.DataFrame({
+    >>    'SepalLengthCm':[5.1, 4.9, 4.7],
+    >>    'SepalWidthCm':[1.4, 1.4, 99],
+    >>    'PetalWidthCm:[0.2, 0.2, 0.2],
+    >>    'Species':['Iris-setosa', 'Iris-virginica', 'Iris-germanica']
+    >> })
 
-    >>> outlier_identifier(data)
+    >> outlier_identifier(data)
 
 
     """
@@ -297,15 +297,22 @@ def scale(dataframe, columns, scaler="standard"):
     >> from eda_utils_py import scale
 
     >> data = pd.DataFrame({
-    >>     'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>     'SepalWidthCm':[1.4, 1.4, 1.3],
-    >>     'PetalWidthCm:[0.2, 0.2, 0.2],
+    >>     'SepalLengthCm':[1, 0, 0, 3, 4],
+    >>     'SepalWidthCm':[4, 1, 1, 0, 1],
+    >>     'PetalWidthCm:[2, 0, 0, 2, 1],
     >>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
     >> })
 
     >> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
 
     >> scale(data, numerical_columns, scaler="minmax")
+
+       SepalLengthCm  SepalWidthCm  PetalWidthCm
+    0           0.25          1.00           1.0
+    1           0.00          0.25           0.0
+    2           0.00          0.25           0.0
+    3           0.75          0.00           1.0
+    4           1.00          0.25           0.5
     """
 
     # Check if input data is of pd.DataFrame type
