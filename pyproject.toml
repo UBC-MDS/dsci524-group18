@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "eda_utils_py"
-version = "0.1.0"
+version = "0.1.1"
 description = "Python package that contains util functions for eda process"
 authors = ["Chuang Wang <chuangw.sde@gmail.com>"]
 license = "MIT"
