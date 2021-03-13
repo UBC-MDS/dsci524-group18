@@ -357,6 +357,18 @@ def test_outlier_identifier():
         }
     )
 
+    numeric_only_df = pd.DataFrame({
+        'SepalLengthCm' : [5.1, 4.9, 4.7, 5.5, 5.1, 50, 5.4, 5.0, 5.2, 5.3, 5.1],
+        'SepalWidthCm' : [1.4, 1.4, 20, 2.0, 0.7, 1.6, 1.2, 1.4, 1.8, 1.5, 2.1],
+        'PetalWidthCm' : [0.2, 0.2, 0.2, 0.3, 0.4, 0.5, 0.5, 0.6, 0.4, 0.2, 5]
+    })
+
+    numeric_only_out = pd.DataFrame({
+        'SepalLengthCm': [5.1, 4.9, 5.5, 5.1, 5.4, 5.0, 5.2, 5.3],
+        'SepalWidthCm': [1.4, 1.4, 2.0, 0.7, 1.2, 1.4, 1.8, 1.5],
+        'PetalWidthCm' :[0.2, 0.2, 0.3, 0.4, 0.5, 0.6, 0.4, 0.2],
+    })
+
     # Test if the imput is not dataFrame
     with raises(TypeError):
         eda_utils_py.outlier_identifier("not dataframe")
@@ -368,6 +380,10 @@ def test_outlier_identifier():
     # Test if input column list is in the dataframe
     with raises(Exception):
         eda_utils_py.outlier_identifier(test_df, columns=["not in"])
+
+    # Test if dataframe contains non-numeric column, but the user want to do it for all columns.
+    with raises(Exception):
+        eda_utils_py.outlier_identifier(test_df, method = "trim")
 
     # Test if method input is not one of three methods provided
     with raises(Exception):
@@ -394,3 +410,6 @@ def test_outlier_identifier():
         ),
         column_output,
     ), "The selected column method is not correct"
+    assert pd.DataFrame.equals(
+        eda_utils_py.outlier_identifier(numeric_only_df, method = "trim"), numeric_only_out
+    ), "The numeric only method is not correct"
