@@ -333,7 +333,7 @@ def scale(dataframe, columns, scaler="standard"):
         if col not in list(dataframe.columns):
             raise Exception("The given column names must exist in the given dataframe.")
 
-    # Check if all input columns in num_col are numeric columns
+    # Check if all input columns in columns are numeric columns
     for col in columns:
         if not is_numeric_dtype(dataframe[col]):
             raise Exception("The given numerical columns must all be numeric.")
@@ -341,16 +341,6 @@ def scale(dataframe, columns, scaler="standard"):
     # Check if scaler is of type str
     if not isinstance(scaler, str):
         raise TypeError("Scaler must be of type str")
-
-    # Check if all input columns exist in the input data
-    for col in columns:
-        if col not in list(dataframe.columns):
-            raise Exception("The given column names must exist in the given dataframe.")
-
-    # Check if all input columns in num_col are numeric columns
-    for col in columns:
-        if not is_numeric_dtype(dataframe[col]):
-            raise Exception("The given columns must all be numeric.")
 
     scaled_df = None
     if scaler == "minmax":
