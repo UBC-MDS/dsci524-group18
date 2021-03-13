@@ -1,11 +1,8 @@
-from eda_utils_py import __version__
 from eda_utils_py import eda_utils_py
 from pytest import raises
 import pandas as pd
 
 
-def test_version():
-    assert __version__ == "0.1.0"
 
 
 def test_imputer():
