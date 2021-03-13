@@ -47,11 +47,36 @@ data = pd.DataFrame({
          'PetalWidthCm':[0.2, 0.1, 0.2],
          'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
          })
+
+data_with_NA = pd.DataFrame({
+         'SepalLengthCm':[5.1, 4.9, 4.7],
+         'SepalWidthCm':[1.4, 1.4, 1.3],
+         'PetalWidthCm':[0.2, 0.1, None]
+         })
+
+data_with_outlier = pd.DataFrame({
+         'SepalLengthCm':[5.1, 4.9, 4.7, 5.2, 5.1, 5.2, 5.1, 4.8],
+         'SepalWidthCm':[1.4, 1.4, 1.3, 1.2, 1.2, 1.3, 1.6, 1.3],
+         'PetalWidthCm':[0.2, 0.1, 30, 0.2, 0.3, 0.1, 0.4, 0.5]
+         })
 ```
 
 The eda_utils_py will help you to:
 - Diagnose data quality: Resolve skewed data by identifing missing data and outlier and provide corresponding remedy.
 
+```python
+imputer(data_with_NA)
+```
+Output:
+
+![imputer_output](images/imputer_output.png)
+
+```python
+outlier_identifier(data_with_outlier, method = "median")
+```
+Output:
+
+![outlier_output](images/outlier_output.png)
 
 - This package can help you easily plot a correlation matrix along with its values to help explore data.
 
