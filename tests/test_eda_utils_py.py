@@ -225,6 +225,22 @@ def test_scaler():
         mock_df_2, ["col1", "col2"], scaler="minmax"
     )
 
+    # Test if the imput is not dataFrame
+    with raises(TypeError):
+        eda_utils_py.outlier_identifier("A string")
+
+    # Tests if contents of columns is not of type str
+    with raises(TypeError):
+        eda_utils_py.cor_map(mock_df_1, (1, 2, 3, 4))
+
+    # Tests if columns do not exist in the dataframe
+    with raises(Exception):
+        eda_utils_py.cor_map(mock_df_1, ['one', 'two'])
+
+    # Tests if if not all columns in columns are numeric
+    with raises(Exception):
+        eda_utils_py.cor_map(mock_df_1, {'col1': "1", 'col2': "3"})
+
     # Tests whether data is not of type pd.Dataframe raises TypeError
     with raises(TypeError):
         eda_utils_py.scale([14, None, 3, 27])
