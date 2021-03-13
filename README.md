@@ -30,7 +30,7 @@ While Python packages with similar functionalities exist, this package aims to s
 
 ## Dependencies
 
-- TBD
+- Please see a list of dependencies [here](pyproject.toml).
 
 ## Usage
 The eda_utils_py package help you to build exploratory data analysis.
