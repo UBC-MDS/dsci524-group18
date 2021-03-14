@@ -29,16 +29,16 @@ def imputer(df, strategy="mean", fill_value=None):
 
     Examples
     ---------
-    >> import pandas as pd
-    >> from eda_utils_py import cor_map
+    >>> import pandas as pd
+    >>> from eda_utils_py import cor_map
 
-    >> data = pd.DataFrame({
-    >>     'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>     'SepalWidthCm':[1.4, 1.4, 1.3],
-    >>     'PetalWidthCm':[0.2, None, 0.2]
-    >> })
+    >>> data = pd.DataFrame({
+    >>>     'SepalLengthCm':[5.1, 4.9, 4.7],
+    >>>     'SepalWidthCm':[1.4, 1.4, 1.3],
+    >>>     'PetalWidthCm':[0.2, None, 0.2]
+    >>> })
 
-    >> imputer(data, numerical_columns)
+    >>> imputer(data, numerical_columns)
        SepalLengthCm  SepalWidthCm  PetalWidthCm
     0            5.1           1.4           0.2
     1            4.9           1.4           0.2
@@ -107,18 +107,18 @@ def cor_map(dataframe, num_col, col_scheme="purpleorange"):
 
     Examples
     ---------
-    >> import pandas as pd
-    >> from eda_utils_py import cor_map
+    >>> import pandas as pd
+    >>> from eda_utils_py import cor_map
 
-    >> data = pd.DataFrame({
-    >>     'SepalLengthCm':[5.1, 4.9, 4.7],
-    >>     'SepalWidthCm':[1.4, 1.4, 1.3],
-    >>     'PetalWidthCm':[0.2, 0.1, 0.2],
-    >>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
-    >> })
+    >>> data = pd.DataFrame({
+    >>>     'SepalLengthCm':[5.1, 4.9, 4.7],
+    >>>     'SepalWidthCm':[1.4, 1.4, 1.3],
+    >>>     'PetalWidthCm':[0.2, 0.1, 0.2],
+    >>>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
+    >>> })
 
-    >> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
-    >> cor_map(data, numerical_columns, col_scheme = 'purpleorange')
+    >>> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
+    >>> cor_map(data, numerical_columns, col_scheme = 'purpleorange')
     """
 
     # Tests whether input data is of pd.DataFrame type
@@ -208,18 +208,18 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
 
     Examples
     --------
-    >> import pandas as pd
-    >> from eda_utils_py import cor_map
+    >>> import pandas as pd
+    >>> from eda_utils_py import cor_map
 
         
-    >> df = pd.DataFrame({
-    >>    'SepalLengthCm' : [5.1, 4.9, 4.7, 5.5, 5.1, 50, 5.4, 5.0, 5.2, 5.3, 5.1],
-    >>    'SepalWidthCm' : [1.4, 1.4, 20, 2.0, 0.7, 1.6, 1.2, 1.4, 1.8, 1.5, 2.1],
-    >>    'PetalWidthCm' : [0.2, 0.2, 0.2, 0.3, 0.4, 0.5, 0.5, 0.6, 0.4, 0.2, 5]
-    >> })
+    >>> df = pd.DataFrame({
+    >>>    'SepalLengthCm' : [5.1, 4.9, 4.7, 5.5, 5.1, 50, 5.4, 5.0, 5.2, 5.3, 5.1],
+    >>>    'SepalWidthCm' : [1.4, 1.4, 20, 2.0, 0.7, 1.6, 1.2, 1.4, 1.8, 1.5, 2.1],
+    >>>    'PetalWidthCm' : [0.2, 0.2, 0.2, 0.3, 0.4, 0.5, 0.5, 0.6, 0.4, 0.2, 5]
+    >>> })
 
 
-    >> outlier_identifier(df)
+    >>> outlier_identifier(df)
     	 SepalLengthCm  	SepalWidthCm	   PetalWidthCm
     0	5.1	                1.4	                0.2
     1	4.9	                1.4	                0.2
@@ -312,19 +312,19 @@ def scale(dataframe, columns, scaler="standard"):
 
     Examples
     --------
-    >> import pandas as pd
-    >> from eda_utils_py import scale
+    >>> import pandas as pd
+    >>> from eda_utils_py import scale
 
-    >> data = pd.DataFrame({
-    >>     'SepalLengthCm':[1, 0, 0, 3, 4],
-    >>     'SepalWidthCm':[4, 1, 1, 0, 1],
-    >>     'PetalWidthCm:[2, 0, 0, 2, 1],
-    >>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
-    >> })
+    >>> data = pd.DataFrame({
+    >>>     'SepalLengthCm':[1, 0, 0, 3, 4],
+    >>>     'SepalWidthCm':[4, 1, 1, 0, 1],
+    >>>     'PetalWidthCm:[2, 0, 0, 2, 1],
+    >>>     'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica']
+    >>> })
 
-    >> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
+    >>> numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
 
-    >> scale(data, numerical_columns, scaler="minmax")
+    >>> scale(data, numerical_columns, scaler="minmax")
        SepalLengthCm  SepalWidthCm  PetalWidthCm
     0           0.25          1.00           1.0
     1           0.00          0.25           0.0
