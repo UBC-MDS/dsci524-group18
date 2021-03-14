@@ -219,7 +219,7 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
     >> })
 
 
-    >> outlier_identifier(data)
+    >> outlier_identifier(df)
     	 SepalLengthCm  	SepalWidthCm	   PetalWidthCm
     0	5.1	                1.4	                0.2
     1	4.9	                1.4	                0.2
