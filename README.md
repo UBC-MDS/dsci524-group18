@@ -59,10 +59,15 @@ data_with_outlier = pd.DataFrame({
          'SepalWidthCm':[1.4, 1.4, 1.3, 1.2, 1.2, 1.3, 1.6, 1.3],
          'PetalWidthCm':[0.2, 0.1, 30, 0.2, 0.3, 0.1, 0.4, 0.5]
          })
+         
+data_with_scale = pd.DataFrame({'SepalLengthCm':[1, 0, 0, 3, 4], 
+         'SepalWidthCm':[4, 1, 1, 0, 1], 
+         'PetalWidthCm':[2, 0, 0, 2, 1],
+         'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica', 'Iris-virginica','Iris-germanica']})      
 ```
 
 The eda_utils_py will help you to:
-- Diagnose data quality: Resolve skewed data by identifing missing data and outlier and provide corresponding remedy.
+- **Impute**: Resolve skewed data by identifying missing data and outlier and provide corresponding remedy.
 
 ```python
 imputer(data_with_NA)
@@ -71,6 +76,8 @@ Output:
 
 ![imputer_output](images/imputer_output.png)
 
+- **Identify Outliers**: Identify and deal with outliers in the dataset.
+
 ```python
 outlier_identifier(data_with_outlier, method = "median")
 ```
@@ -78,7 +85,7 @@ Output:
 
 ![outlier_output](images/outlier_output.png)
 
-- This package can help you easily plot a correlation matrix along with its values to help explore data.
+- **Correlation Heatmap Plotting**: Easily plot a correlation matrix along with its values to help explore data.
 
 ```python
 numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
@@ -90,8 +97,18 @@ Output:
 
 ![cor_map_output](images/cor_map.output.png)
 
-- Machine learning pereperation: Perform column transformations, derive scaler automatically to fulfill further machine learning need
-    
+- **Scaling**: Scale the data in preperation for future use in machine learning projects.
+
+```python
+numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
+
+scale(data, numerical_columns, scaler="minmax")
+
+```
+Output:
+
+![scale_output](images/scale_output.png)
+
 ## Documentation
 
 The official documentation is hosted on Read the Docs: https://eda_utils_py.readthedocs.io/en/latest/
