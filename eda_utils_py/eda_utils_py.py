@@ -55,7 +55,7 @@ def imputer(df, strategy="mean", fill_value=None):
 
     # Tests whether input fill_value is of type numbers or None
     if not isinstance(fill_value, type(None)) and not isinstance(
-            fill_value, numbers.Number
+        fill_value, numbers.Number
     ):
         raise TypeError("fill_value must be of type None or numeric type")
 
@@ -159,13 +159,17 @@ def cor_map(dataframe, num_col, col_scheme="purpleorange"):
 
     plot = (
         alt.Chart(corr_matrix)
-            .mark_rect()
-            .encode(
+        .mark_rect()
+        .encode(
             x=alt.X("var1", title=None),
             y=alt.Y("var2", title=None),
-            color=alt.Color("cor", title = 'Correlation', scale=alt.Scale(scheme=col_scheme, domain = (-1,1))),
+            color=alt.Color(
+                "cor",
+                title="Correlation",
+                scale=alt.Scale(scheme=col_scheme, domain=(-1, 1)),
+            ),
         )
-            .properties(title="Correlation Matrix", width=400, height=400)
+        .properties(title="Correlation Matrix", width=400, height=400)
     )
 
     text = plot.mark_text(size=15).encode(
@@ -195,7 +199,7 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
             - if "trim" : we completely remove data points that are outliers.
             - if "median" : we replace outliers with median values
             - if "mean" : we replace outliers with mean values
-        
+
 
     Returns
     -------
@@ -206,7 +210,7 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
     --------
     >> import pandas as pd
     >> from eda_utils_py import cor_map
-        
+
     >> data = pd.DataFrame({
     >>    'SepalLengthCm':[5.1, 4.9, 4.7],
     >>    'SepalWidthCm':[1.4, 1.4, 99],
@@ -224,7 +228,9 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
     if columns is None:
         for col in dataframe.columns:
             if not is_numeric_dtype(dataframe[col]):
-                raise Exception("The given dataframe contains column that is not numeric column.")
+                raise Exception(
+                    "The given dataframe contains column that is not numeric column."
+                )
 
     if columns is not None:
         if not isinstance(columns, list):
@@ -232,16 +238,20 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
 
         for col in columns:
             if col not in list(dataframe.columns):
-                raise Exception("The given column list contains column that is not exist in the given dataframe.")
+                raise Exception(
+                    "The given column list contains column that is not exist in the given dataframe."
+                )
             if not is_numeric_dtype(dataframe[col]):
-                raise Exception("The given column list contains column that is not numeric column.")
+                raise Exception(
+                    "The given column list contains column that is not numeric column."
+                )
 
     if method not in ("trim", "median", "mean"):
         raise Exception("The method must be -trim- or -median- or -mean-")
 
     df = dataframe.copy()
     target_columns = []
-    if (columns is None):
+    if columns is None:
         target_columns = list(df.columns.values.tolist())
     else:
         target_columns = columns
@@ -257,14 +267,14 @@ def outlier_identifier(dataframe, columns=None, method="trim"):
             current_item = current_column[i]
             z = (current_item - mean) / std
             if z >= threshold:
-                if (i not in outlier_index):
+                if i not in outlier_index:
                     outlier_index.append(i)
-                if (method == "mean"):
+                if method == "mean":
                     df.at[i, column] = round(mean, 2)
-                if (method == "median"):
+                if method == "median":
                     df.at[i, column] = np.median(current_column)
 
-    if (method == "trim"):
+    if method == "trim":
         df = df.drop(outlier_index)
 
     df.index = range(len(df))
@@ -307,12 +317,12 @@ def scale(dataframe, columns, scaler="standard"):
 
     >> scale(data, numerical_columns, scaler="minmax")
 
-       SepalLengthCm  SepalWidthCm  PetalWidthCm
-    0           0.25          1.00           1.0
-    1           0.00          0.25           0.0
-    2           0.00          0.25           0.0
-    3           0.75          0.00           1.0
-    4           1.00          0.25           0.5
+    >>    SepalLengthCm  SepalWidthCm  PetalWidthCm
+    >> 0           0.25          1.00           1.0
+    >> 1           0.00          0.25           0.0
+    >> 2           0.00          0.25           0.0
+    >> 3           0.75          0.00           1.0
+    >> 4           1.00          0.25           0.5
     """
 
     # Check if input data is of pd.DataFrame type
@@ -379,24 +389,24 @@ def _standardize(dataframe):
 
 def _minmax(dataframe):
     """Transform features by rescaling each feature to the range between 0 and 1.
-        The transformation is given by:
+    The transformation is given by:
 
-            scaled_value = (feature_value - min) / (mix - min)
+        scaled_value = (feature_value - min) / (mix - min)
 
-        where min, max = feature_range.
+    where min, max = feature_range.
 
-        This transformation is often used as an alternative to zero mean,
-        unit variance scaling.
+    This transformation is often used as an alternative to zero mean,
+    unit variance scaling.
 
-        Parameters
-        ----------
-        dataframe : pandas.DataFrame
-            The data frame to be used for EDA.
-        Returns
-        -------
-        res : pandas.core.frame.DataFrame
-            Scaled dataset
-        """
+    Parameters
+    ----------
+    dataframe : pandas.DataFrame
+        The data frame to be used for EDA.
+    Returns
+    -------
+    res : pandas.core.frame.DataFrame
+        Scaled dataset
+    """
 
     res = dataframe.copy()
     for feature_name in dataframe.columns:
