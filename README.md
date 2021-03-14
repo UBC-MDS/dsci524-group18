@@ -33,9 +33,9 @@ While Python packages with similar functionalities exist, this package aims to s
 - Please see a list of dependencies [here](pyproject.toml).
 
 ## Usage
-The eda_utils_py package help you to build exploratory data analysis.
+The eda_utils_py package will help you in your exploratory data analysis portion of your work.
 
-eda_utils_py includes multiple custom functions to perform initial exploratory analysis on any input data describing the structure and the relationships present in the data. The generated output can be obtained in both object and graphical form. 
+eda_utils_py includes multiple custom functions to perform initial exploratory analysis on any input data describing the structure and the relationships present in the data. Depending on the function, the generated output can be obtained in object or graphical form. 
 
 ```python
 import pandas as pd
@@ -66,13 +66,13 @@ data_with_scale = pd.DataFrame({'SepalLengthCm':[1, 0, 0, 3, 4],
          'Species':['Iris-setosa','Iris-virginica', 'Iris-germanica', 'Iris-virginica','Iris-germanica']})      
 ```
 
-The eda_utils_py will help you to:
+The eda_utils_py package contains functions that will help you to:
 - **Impute**: Resolve skewed data by identifying missing data and outlier and provide corresponding remedy.
 
 ```python
 imputer(data_with_NA)
 ```
-Output:
+Output of `imputer()`:
 
 ![imputer_output](images/imputer_output.png)
 
@@ -81,7 +81,7 @@ Output:
 ```python
 outlier_identifier(data_with_outlier, method = "median")
 ```
-Output:
+Output `outlier_identifier()`:
 
 ![outlier_output](images/outlier_output.png)
 
@@ -93,7 +93,7 @@ numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
 cor_map(data, numerical_columns, col_scheme = 'purpleorange')
 
 ```
-Output:
+Output of `cor_map()`:
 
 ![cor_map_output](images/cor_map.output.png)
 
@@ -105,7 +105,7 @@ numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
 scale(data, numerical_columns, scaler="minmax")
 
 ```
-Output:
+Output `scale()`:
 
 ![scale_output](images/scale_output.png)
 
