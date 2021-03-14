@@ -15,10 +15,10 @@ $ pip install -i https://test.pypi.org/simple/ eda_utils_py
 ## Functions
 
 The four functions contained in this package are as follows:
-- `cor_map`: A function to plot a correlation matrix of numeric columns in the dataframe
-- `outlier_identifier`: A function to identify and deal with outliers
-- `scale` A function to scale numerical values in the dataset
 - `imputer`: A function to impute missing values
+- `outlier_identifier`: A function to identify and deal with outliers
+- `cor_map`: A function to plot a correlation matrix of numeric columns in the dataframe
+- `scale` A function to scale numerical values in the dataset
 
 
 ## Our Place in the Python Ecosystem
@@ -81,7 +81,7 @@ Output of `imputer()`:
 ```python
 outlier_identifier(data_with_outlier, method = "median")
 ```
-Output `outlier_identifier()`:
+Output of `outlier_identifier()`:
 
 ![outlier_output](images/outlier_output.png)
 
@@ -105,7 +105,7 @@ numerical_columns = ['SepalLengthCm','SepalWidthCm','PetalWidthCm']
 scale(data, numerical_columns, scaler="minmax")
 
 ```
-Output `scale()`:
+Output of `scale()`:
 
 ![scale_output](images/scale_output.png)
 
