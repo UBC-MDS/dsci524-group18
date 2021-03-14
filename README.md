@@ -1,6 +1,6 @@
 # eda_utils_py 
 
-[![build](https://github.com/UBC-MDS/eda_utils_py/actions/workflows/build.yml/badge.svg)](https://github.com/UBC-MDS/eda_utils_py/actions/workflows/build.yml) ![](https://github.com/chuangw46/eda_utils_py/workflows/build/badge.svg) [![codecov](https://codecov.io/gh/UBC-MDS/eda_utils_py/branch/main/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/eda_utils_py) [![Deploy](https://github.com/UBC-MDS/eda_utils_py/actions/workflows/deploy.yml/badge.svg)](https://github.com/UBC-MDS/eda_utils_py/actions/workflows/deploy.yml) [![Documentation Status](https://readthedocs.org/projects/eda_utils_py/badge/?version=latest)](https://eda_utils_py.readthedocs.io/en/latest/?badge=latest)
+[![build](https://github.com/UBC-MDS/eda_utils_py/actions/workflows/build.yml/badge.svg)](https://github.com/UBC-MDS/eda_utils_py/actions/workflows/build.yml) ![](https://github.com/chuangw46/eda_utils_py/workflows/build/badge.svg) [![codecov](https://codecov.io/gh/UBC-MDS/eda_utils_py/branch/main/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/eda_utils_py) [![Deploy](https://github.com/UBC-MDS/eda_utils_py/actions/workflows/deploy.yml/badge.svg)](https://github.com/UBC-MDS/eda_utils_py/actions/workflows/deploy.yml) [![Documentation Status](https://readthedocs.org/projects/eda_utils_py/badge/?version=v0.1.20)](https://eda_utils_py.readthedocs.io/en/v0.1.20/?badge=v0.1.20)
 
 ## Overview 
 
