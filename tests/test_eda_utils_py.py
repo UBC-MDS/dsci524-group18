@@ -173,6 +173,14 @@ def test_cor_map():
 
 
 def test_scaler():
+    data = pd.DataFrame(
+        {
+            "SepalLengthCm": [5.1, 4.9, 4.7],
+            "SepalWidthCm": [1.4, 1.4, 1.3],
+            "PetalWidthCm": [0.2, 0.1, 0.2],
+            "Species": ["Iris-setosa", "Iris-virginica", "Iris-germanica"],
+        }
+    )
     mock_df_1 = pd.DataFrame(
         {"col1": [1, 0, 0, 3, 4], "col2": [4, 1, 1, 0, 1], "col3": [2, 0, 0, 2, 1]}
     )
@@ -224,6 +232,25 @@ def test_scaler():
     minmax_scaled_mock_df_2 = eda_utils_py.scale(
         mock_df_2, ["col1", "col2"], scaler="minmax"
     )
+
+    # Test if the imput is not dataFrame
+    with raises(TypeError):
+        eda_utils_py.scale("A string", ['one', 'two'])
+
+    # Tests if contents of columns is not of type str
+    with raises(TypeError):
+        eda_utils_py.scale(mock_df_1, [1, 2, 3, 4])
+
+    with raises(TypeError):
+        eda_utils_py.scale(mock_df_1, [None])
+
+    # Tests if columns do not exist in the dataframe
+    with raises(Exception):
+        eda_utils_py.scale(mock_df_1, ['one', 'two'])
+
+    # Tests if if not all columns in columns are numeric
+    with raises(Exception):
+        eda_utils_py.scale(data, ['Species'])
 
     # Tests whether data is not of type pd.Dataframe raises TypeError
     with raises(TypeError):
