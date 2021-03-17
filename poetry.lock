@@ -21,6 +21,8 @@ jsonschema = "*"
 numpy = "*"
 pandas = ">=0.18"
 toolz = "*"
+altair = "^4.1.0"
+
 
 [package.extras]
 dev = ["black", "docutils", "ipython", "flake8", "pytest", "sphinx", "m2r", "vega-datasets", "recommonmark"]
