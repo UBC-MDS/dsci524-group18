@@ -16,8 +16,6 @@ pytest-cov = "^2.11.1"
 python-semantic-release = "^7.15.0"
 nbsphinx = "^0.8.2"
 ipykernel = "^5.5.0"
-altair = "^4.1.0"
-pandas = "^1.2.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
