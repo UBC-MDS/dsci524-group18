@@ -4,7 +4,7 @@
 
 ## Overview 
 
-As data rarely comes ready to be used and analyzed for machine learning right away, this package aims to help speed up the process of cleaning and doing initial exploratory data anslysis (EDA). The package focuses on the tasks of dealing with outlier and missing values, scaling and correlation visualization.
+As data rarely comes ready to be used and analyzed for machine learning right away, this package aims to help speed up the process of cleaning and doing initial exploratory data analysis (EDA). The package focuses on the tasks of dealing with outlier and missing values, scaling and correlation visualization.
 
 ## Installation
 
